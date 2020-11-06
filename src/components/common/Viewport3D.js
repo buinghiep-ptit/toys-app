@@ -25,7 +25,7 @@ import {
     DoubleSide
 } from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
-import { ZipLoader } from 'three-ziploader/src/ZipLoader.js';
+import { ZipLoader } from '../../../src/zip-loader/ZipLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -287,13 +287,13 @@ export default class Viewport3D extends Component {
 
             if (url.match(/\.zip$/)) {
 
-                // new ZipLoader().load(url).then(function (zip) {
+                new ZipLoader().load(url).then(function (zip) {
 
-                //     manager.setURLModifier(zip.urlResolver);
+                    manager.setURLModifier(zip.urlResolver);
 
-                //     resolve(zip.find(/\.(gltf|glb)$/i)[0]);
+                    resolve(zip.find(/\.(gltf|glb)$/i)[0]);
 
-                // });
+                });
 
             } else {
 
@@ -303,25 +303,25 @@ export default class Viewport3D extends Component {
 
         }).then((file) => {
 
-            // const loader = new GLTFLoader(manager);
-            // loader.setCrossOrigin('anonymous');
-            // // const dracoLoader = new DRACOLoader();
-            // // dracoLoader.setDecoderPath('/draco/');
-            // // loader.setDRACOLoader( dracoLoader );
-            // loader.load(file, (gltf) => {
-            //     const scene = gltf.scene || gltf.scenes[0];
-            //     const clips = gltf.animations || [];
+            const loader = new GLTFLoader(manager);
+            loader.setCrossOrigin('anonymous');
+            // const dracoLoader = new DRACOLoader();
+            // dracoLoader.setDecoderPath('/draco/');
+            // loader.setDRACOLoader( dracoLoader );
+            loader.load(file, (gltf) => {
+                const scene = gltf.scene || gltf.scenes[0];
+                const clips = gltf.animations || [];
 
-            //     if (!scene) {
-            //         // Valid, but not supported by this viewer.
-            //         throw new Error(
-            //             'This model contains no scene, and cannot be viewed here. However,'
-            //             + ' it may contain individual 3D resources.'
-            //         );
-            //     }
+                if (!scene) {
+                    // Valid, but not supported by this viewer.
+                    throw new Error(
+                        'This model contains no scene, and cannot be viewed here. However,'
+                        + ' it may contain individual 3D resources.'
+                    );
+                }
 
-            //     this.setContent(scene, clips);
-            // });
+                this.setContent(scene, clips);
+            });
 
         });
     }

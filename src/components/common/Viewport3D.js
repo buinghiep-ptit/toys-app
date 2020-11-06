@@ -287,13 +287,13 @@ export default class Viewport3D extends Component {
 
             if (url.match(/\.zip$/)) {
 
-                new ZipLoader().load(url).then(function (zip) {
+                // new ZipLoader().load(url).then(function (zip) {
 
-                    manager.setURLModifier(zip.urlResolver);
+                //     manager.setURLModifier(zip.urlResolver);
 
-                    resolve(zip.find(/\.(gltf|glb)$/i)[0]);
+                //     resolve(zip.find(/\.(gltf|glb)$/i)[0]);
 
-                });
+                // });
 
             } else {
 

@@ -188,7 +188,7 @@ export default class Viewport3D extends Component {
 
         this.loadSphere360();
         // this.loadPanorama();
-        // this.loadModel();
+        this.loadModel();
 
         this.addAxesHelper();
         this.addGUI();
@@ -320,7 +320,8 @@ export default class Viewport3D extends Component {
                     );
                 }
 
-                this.setContent(scene, clips);
+                // this.setContent(scene, clips);
+                this.scene.add(scene);
             });
 
         });

@@ -305,8 +305,8 @@ export default class Viewport3D extends Component {
 
             const loader = new GLTFLoader(manager);
             loader.setCrossOrigin('anonymous');
-            const dracoLoader = new DRACOLoader();
-            dracoLoader.setDecoderPath('/draco/');
+            // const dracoLoader = new DRACOLoader();
+            // dracoLoader.setDecoderPath('/draco/');
             // loader.setDRACOLoader( dracoLoader );
             loader.load(file, (gltf) => {
                 const scene = gltf.scene || gltf.scenes[0];
@@ -320,8 +320,7 @@ export default class Viewport3D extends Component {
                     );
                 }
 
-                // this.setContent(scene, clips);
-                this.scene.add(scene);
+                this.setContent(scene, clips);
             });
 
         });

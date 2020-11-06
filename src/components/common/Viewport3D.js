@@ -325,10 +325,10 @@ export default class Viewport3D extends Component {
 
     //     });
     // }
-    // /**
-    //  * @param {THREE.Object3D} object
-    //  * @param {Array<THREE.AnimationClip} clips
-    //  */
+    /**
+     * @param {THREE.Object3D} object
+     * @param {Array<THREE.AnimationClip} clips
+     */
     setContent(object, clips) {
 
         this.clear();

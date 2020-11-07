@@ -158,8 +158,8 @@ export default class Viewport3D extends Component {
 
         this.controls = new OrbitControls(this.defaultCamera, this.renderer.domElement);
         this.controls.enableZoom = false;
-        this.controls.enablePan = false;
-        this.controls.enableDamping = true;
+        // this.controls.enablePan = false;
+        // this.controls.enableDamping = true;
         this.controls.rotateSpeed = - 0.5;
         this.controls.autoRotate = true;
         this.controls.screenSpacePanning = true;
@@ -215,6 +215,7 @@ export default class Viewport3D extends Component {
         cancelAnimationFrame(this.frameId)
     }
     animate = (time) => {
+        this.frameId = window.requestAnimationFrame(this.animate)
         const dt = (time - this.prevTime) / 1000;
 
         this.controls.update();
@@ -223,8 +224,6 @@ export default class Viewport3D extends Component {
         this.renderScene();
 
         this.prevTime = time;
-
-        this.frameId = window.requestAnimationFrame(this.animate)
 
     }
 
@@ -701,82 +700,155 @@ export default class Viewport3D extends Component {
 
     }
 
-    updateGUI() {
-        this.cameraFolder.domElement.style.display = 'none';
+    // updateGUI() {
+    //     this.cameraFolder.domElement.style.display = 'none';
 
+    //     this.morphCtrls.forEach((ctrl) => ctrl.remove());
+    //     this.morphCtrls.length = 0;
+    //     this.morphFolder.domElement.style.display = 'none';
+
+    //     this.animCtrls.forEach((ctrl) => ctrl.remove());
+    //     this.animCtrls.length = 0;
+    //     this.animFolder.domElement.style.display = 'none';
+
+    //     const cameraNames = [];
+    //     const morphMeshes = [];
+    //     this.content.traverse((node) => {
+    //         if (node.isMesh && node.morphTargetInfluences) {
+    //             morphMeshes.push(node);
+    //         }
+    //         if (node.isCamera) {
+    //             node.name = node.name || `VIEWER__camera_${cameraNames.length + 1}`;
+    //             cameraNames.push(node.name);
+    //         }
+    //     });
+
+    //     if (cameraNames.length) {
+    //         this.cameraFolder.domElement.style.display = '';
+    //         if (this.cameraCtrl) this.cameraCtrl.remove();
+    //         const cameraOptions = [DEFAULT_CAMERA].concat(cameraNames);
+    //         this.cameraCtrl = this.cameraFolder.add(this.state, 'camera', cameraOptions);
+    //         this.cameraCtrl.onChange((name) => this.setCamera(name));
+    //     }
+
+    //     if (morphMeshes.length) {
+    //         this.morphFolder.domElement.style.display = '';
+    //         morphMeshes.forEach((mesh) => {
+    //             if (mesh.morphTargetInfluences.length) {
+    //                 const nameCtrl = this.morphFolder.add({ name: mesh.name || 'Untitled' }, 'name');
+    //                 this.morphCtrls.push(nameCtrl);
+    //             }
+    //             for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
+    //                 const ctrl = this.morphFolder.add(mesh.morphTargetInfluences, i, 0, 1, 0.01).listen();
+    //                 Object.keys(mesh.morphTargetDictionary).forEach((key) => {
+    //                     if (key && mesh.morphTargetDictionary[key] === i) ctrl.name(key);
+    //                 });
+    //                 this.morphCtrls.push(ctrl);
+    //             }
+    //         });
+    //     }
+
+    //     if (this.clips.length) {
+    //         this.animFolder.domElement.style.display = '';
+    //         this.setState({
+    //             actionStates: {}
+    //         })
+    //         const actionStates = this.state.actionStates;
+    //         this.clips.forEach((clip, clipIndex) => {
+    //             // Autoplay the first clip.
+    //             let action;
+    //             if (clipIndex === 0) {
+    //                 actionStates[clip.name] = true;
+    //                 action = this.mixer.clipAction(clip);
+    //                 action.play();
+    //             } else {
+    //                 actionStates[clip.name] = false;
+    //             }
+
+    //             // Play other clips when enabled.
+    //             const ctrl = this.animFolder.add(actionStates, clip.name).listen();
+    //             ctrl.onChange((playAnimation) => {
+    //                 action = action || this.mixer.clipAction(clip);
+    //                 action.setEffectiveTimeScale(1);
+    //                 playAnimation ? action.play() : action.stop();
+    //             });
+    //             this.animCtrls.push(ctrl);
+    //         });
+    //     }
+    // }
+    updateGUI () {
+        this.cameraFolder.domElement.style.display = 'none';
+    
         this.morphCtrls.forEach((ctrl) => ctrl.remove());
         this.morphCtrls.length = 0;
         this.morphFolder.domElement.style.display = 'none';
-
+    
         this.animCtrls.forEach((ctrl) => ctrl.remove());
         this.animCtrls.length = 0;
         this.animFolder.domElement.style.display = 'none';
-
+    
         const cameraNames = [];
         const morphMeshes = [];
         this.content.traverse((node) => {
-            if (node.isMesh && node.morphTargetInfluences) {
-                morphMeshes.push(node);
-            }
-            if (node.isCamera) {
-                node.name = node.name || `VIEWER__camera_${cameraNames.length + 1}`;
-                cameraNames.push(node.name);
-            }
+          if (node.isMesh && node.morphTargetInfluences) {
+            morphMeshes.push(node);
+          }
+          if (node.isCamera) {
+            node.name = node.name || `VIEWER__camera_${cameraNames.length + 1}`;
+            cameraNames.push(node.name);
+          }
         });
-
+    
         if (cameraNames.length) {
-            this.cameraFolder.domElement.style.display = '';
-            if (this.cameraCtrl) this.cameraCtrl.remove();
-            const cameraOptions = [DEFAULT_CAMERA].concat(cameraNames);
-            this.cameraCtrl = this.cameraFolder.add(this.state, 'camera', cameraOptions);
-            this.cameraCtrl.onChange((name) => this.setCamera(name));
+          this.cameraFolder.domElement.style.display = '';
+          if (this.cameraCtrl) this.cameraCtrl.remove();
+          const cameraOptions = [DEFAULT_CAMERA].concat(cameraNames);
+          this.cameraCtrl = this.cameraFolder.add(this.state, 'camera', cameraOptions);
+          this.cameraCtrl.onChange((name) => this.setCamera(name));
         }
-
+    
         if (morphMeshes.length) {
-            this.morphFolder.domElement.style.display = '';
-            morphMeshes.forEach((mesh) => {
-                if (mesh.morphTargetInfluences.length) {
-                    const nameCtrl = this.morphFolder.add({ name: mesh.name || 'Untitled' }, 'name');
-                    this.morphCtrls.push(nameCtrl);
-                }
-                for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
-                    const ctrl = this.morphFolder.add(mesh.morphTargetInfluences, i, 0, 1, 0.01).listen();
-                    Object.keys(mesh.morphTargetDictionary).forEach((key) => {
-                        if (key && mesh.morphTargetDictionary[key] === i) ctrl.name(key);
-                    });
-                    this.morphCtrls.push(ctrl);
-                }
-            });
+          this.morphFolder.domElement.style.display = '';
+          morphMeshes.forEach((mesh) => {
+            if (mesh.morphTargetInfluences.length) {
+              const nameCtrl = this.morphFolder.add({name: mesh.name || 'Untitled'}, 'name');
+              this.morphCtrls.push(nameCtrl);
+            }
+            for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
+              const ctrl = this.morphFolder.add(mesh.morphTargetInfluences, i, 0, 1, 0.01).listen();
+              Object.keys(mesh.morphTargetDictionary).forEach((key) => {
+                if (key && mesh.morphTargetDictionary[key] === i) ctrl.name(key);
+              });
+              this.morphCtrls.push(ctrl);
+            }
+          });
         }
-
+    
         if (this.clips.length) {
-            this.animFolder.domElement.style.display = '';
-            this.setState({
-                actionStates: {}
-            })
-            const actionStates = this.state.actionStates;
-            this.clips.forEach((clip, clipIndex) => {
-                // Autoplay the first clip.
-                let action;
-                if (clipIndex === 0) {
-                    actionStates[clip.name] = true;
-                    action = this.mixer.clipAction(clip);
-                    action.play();
-                } else {
-                    actionStates[clip.name] = false;
-                }
-
-                // Play other clips when enabled.
-                const ctrl = this.animFolder.add(actionStates, clip.name).listen();
-                ctrl.onChange((playAnimation) => {
-                    action = action || this.mixer.clipAction(clip);
-                    action.setEffectiveTimeScale(1);
-                    playAnimation ? action.play() : action.stop();
-                });
-                this.animCtrls.push(ctrl);
+          this.animFolder.domElement.style.display = '';
+          const actionStates = this.state.actionStates;
+          this.clips.forEach((clip, clipIndex) => {
+            // Autoplay the first clip.
+            let action;
+            if (clipIndex === 0) {
+              actionStates[clip.name] = true;
+              action = this.mixer.clipAction(clip);
+              action.play();
+            } else {
+              actionStates[clip.name] = false;
+            }
+    
+            // Play other clips when enabled.
+            const ctrl = this.animFolder.add(actionStates, clip.name).listen();
+            ctrl.onChange((playAnimation) => {
+              action = action || this.mixer.clipAction(clip);
+              action.setEffectiveTimeScale(1);
+              playAnimation ? action.play() : action.stop();
             });
+            this.animCtrls.push(ctrl);
+          });
         }
-    }
+      }
 
     clear() {
 

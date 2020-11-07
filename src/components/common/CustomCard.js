@@ -61,7 +61,7 @@ export default function CustomCard(props) {
                         : <Avatar
                             aria-label="recipe"
                             className={classes.avatar}
-                            src={avatar} />
+                            src={model.avatar} />
                 }
                 action={
                     loading ? null
@@ -71,11 +71,11 @@ export default function CustomCard(props) {
                 }
                 title={
                     loading ? <Skeleton animation="wave" height={10} width="80%" style={{ marginBottom: 6 }} />
-                        : "Darius skin lego"
+                        : model.name
                 }
                 subheader={
                     loading ? <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
-                        : "10/11/2020"
+                        : model.dateCreation
                 }
             />
             {/* <CardActionArea> */}

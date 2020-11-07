@@ -12,29 +12,37 @@ const useStyles = makeStyles(styles);
 const listModel = [
     {
         id : 1,
-        name : '',
+        name : 'Aatrox animation skin',
+        avatar : './avatars/aatrox.png',
+        dateCreation : '07/11/2020',
         urlModel : '/models/league_of_legends_-_aatrox.zip',
         urlBackground : '/backgrounds/bg_lol/aatrox.png',
         description : ''
     },
     {
         id : 2,
-        name : '',
+        name : 'Darius skin',
+        avatar : './avatars/darius.png',
+        dateCreation : '07/11/2020',
         urlModel : '/models/darius.zip',
         urlBackground : '/backgrounds/bg_lol/darius.png',
         description : ''
     },
     {
         id : 3,
-        name : '',
+        name : 'Shen base skin',
+        avatar : './avatars/shen.png',
+        dateCreation : '06/11/2020',
         urlModel : '/models/shen_base_skin.zip',
         urlBackground : './backgrounds/bg_lol/shen.png',
         description : ''
     },
     {
         id : 4,
-        name : '',
-        urlModel : '/models/yasuo_3rd_skin_edit.zip',
+        name : 'Yasuo skin edit',
+        avatar : './avatars/yasuo.png',
+        dateCreation : '06/11/2020',
+        urlModel : './models/yasuo_3rd_skin_edit.zip',
         urlBackground : './backgrounds/bg_lol/yasou.png',
         description : ''
     }

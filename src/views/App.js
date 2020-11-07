@@ -15,7 +15,7 @@ function App(props) {
     return (
       <div>
         <Header 
-          branch="Toys"
+          branch="Lego"
           fixed
           color="transparent"
            changeColorOnScroll={{

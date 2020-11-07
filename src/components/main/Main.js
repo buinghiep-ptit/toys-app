@@ -17,6 +17,9 @@ const listModel = [
         dateCreation : '07/11/2020',
         urlModel : '/models/league_of_legends_-_aatrox.zip',
         urlBackground : '/backgrounds/bg_lol/aatrox.png',
+        views : '1.1k',
+        comments : 15,
+        likes : 8,
         description : ''
     },
     {
@@ -26,6 +29,9 @@ const listModel = [
         dateCreation : '07/11/2020',
         urlModel : '/models/darius.zip',
         urlBackground : '/backgrounds/bg_lol/darius.png',
+        views : '23',
+        comments : 4,
+        likes : 17,
         description : ''
     },
     {
@@ -35,6 +41,9 @@ const listModel = [
         dateCreation : '06/11/2020',
         urlModel : '/models/shen_base_skin.zip',
         urlBackground : './backgrounds/bg_lol/shen.png',
+        views : '102',
+        comments : 9,
+        likes : 27,
         description : ''
     },
     {
@@ -44,6 +53,9 @@ const listModel = [
         dateCreation : '06/11/2020',
         urlModel : './models/yasuo_3rd_skin_edit.zip',
         urlBackground : './backgrounds/bg_lol/yasou.png',
+        views : '29',
+        comments : 13,
+        likes : 11,
         description : ''
     }
 ]

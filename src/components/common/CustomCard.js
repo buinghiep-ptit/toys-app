@@ -1,5 +1,4 @@
 import React from "react";
-import avatar from '../../assets/img/yasou.jpeg';
 import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 // @mui core
@@ -124,7 +123,7 @@ export default function CustomCard(props) {
                         aria-label="view">
                         <VisibilityIcon style={{ fontSize: "1rem" }} />
                         <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
-                            {"8.1k"}
+                            {model.views}
                         </div>
                     </IconButton>
                     <IconButton
@@ -132,7 +131,7 @@ export default function CustomCard(props) {
                         aria-label="comment">
                         <CommentIcon style={{ fontSize: "1rem" }} />
                         <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
-                            {"104"}
+                            {model.comments}
                         </div>
                     </IconButton>
                     <IconButton
@@ -140,7 +139,7 @@ export default function CustomCard(props) {
                         aria-label="like">
                         <FavoriteIcon style={{ fontSize: "1rem" }} />
                         <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
-                            {"58"}
+                            {model.likes}
                         </div>
                     </IconButton>
                 </>}

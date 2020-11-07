@@ -122,7 +122,7 @@ export default function CustomCard(props) {
                         className={classes.icons}
                         aria-label="view">
                         <VisibilityIcon style={{ fontSize: "1rem" }} />
-                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
+                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem", marginLeft: "3px" }}>
                             {model.views}
                         </div>
                     </IconButton>
@@ -130,7 +130,7 @@ export default function CustomCard(props) {
                         className={classes.icons}
                         aria-label="comment">
                         <CommentIcon style={{ fontSize: "1rem" }} />
-                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
+                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem", marginLeft: "3px" }}>
                             {model.comments}
                         </div>
                     </IconButton>
@@ -138,7 +138,7 @@ export default function CustomCard(props) {
                         className={classes.icons}
                         aria-label="like">
                         <FavoriteIcon style={{ fontSize: "1rem" }} />
-                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem" }}>
+                        <div style={{ fontSize: "0.8rem", marginRight: "0.8rem", marginLeft: "3px" }}>
                             {model.likes}
                         </div>
                     </IconButton>

@@ -157,9 +157,11 @@ export default class Viewport3D extends Component {
         this.pmremGenerator.compileEquirectangularShader();
 
         this.controls = new OrbitControls(this.defaultCamera, this.renderer.domElement);
-        this.controls.enableZoom = false;
+        // this.controls.enableZoom = false;
         // this.controls.enablePan = false;
         // this.controls.enableDamping = true;
+        this.controls.minDistance = 5;
+        this.controls.maxDistance = 100;
         this.controls.rotateSpeed = - 0.5;
         this.controls.autoRotate = true;
         this.controls.screenSpacePanning = true;

@@ -35,7 +35,7 @@ const customDialogStyle = {
         top: "40px",
         "@media (max-width: 768px)" :
         {
-            left: "20px" 
+            left: "10px" 
         }
       },
       popupModel : {
@@ -51,14 +51,14 @@ const customDialogStyle = {
         width: "calc(100vw - 100px)",
         "@media (max-width: 768px)" :
         {
-            width: "calc(100vw - 40px)"
+            width: "calc(100vw - 20px)"
         }
       },
       modelContainer : {
         fontFamily: "Open Sans,sans-serif",
         boxSizing: "border-box",
         display: "flex",
-        padding: "30px",
+        padding: "15px",
         maxWidth: "100%",
         position: "relative",
         backgroundColor: "#EEE",
@@ -70,7 +70,7 @@ const customDialogStyle = {
         },
         "@media (max-width: 768px)" :
         {
-            padding: "15px!important"
+            padding: "12px!important"
         }
       },
       modelMain : {

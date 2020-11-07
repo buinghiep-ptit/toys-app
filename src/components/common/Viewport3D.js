@@ -36,6 +36,7 @@ import { GUI } from 'dat.gui';
 
 // import { environments } from '../assets/environment/index.js';
 import { createBackground } from '../../../src/lib/three-vignette.js';
+import { MeshoptDecoder } from '../../../src/gltf-pack/js/meshopt_decoder.js';
 
 const DEFAULT_CAMERA = '[default]';
 
@@ -311,6 +312,7 @@ export default class Viewport3D extends Component {
             // dracoLoader.setDecoderConfig( { type: 'js' } );
             // dracoLoader.preload();
             // loader.setDRACOLoader( dracoLoader );
+            loader.setMeshoptDecoder(MeshoptDecoder);
             loader.load(file, (gltf) => {
                 const scene = gltf.scene || gltf.scenes[0];
                 const clips = gltf.animations || [];

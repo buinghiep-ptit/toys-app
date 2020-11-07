@@ -306,9 +306,9 @@ export default class Viewport3D extends Component {
 
             const loader = new GLTFLoader(manager);
             loader.setCrossOrigin('anonymous');
-            // const dracoLoader = new DRACOLoader();
-            // dracoLoader.setDecoderPath('/draco/');
-            // loader.setDRACOLoader( dracoLoader );
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderPath('/three/examples/js/libs/draco/');
+            loader.setDRACOLoader( dracoLoader );
             loader.load(file, (gltf) => {
                 const scene = gltf.scene || gltf.scenes[0];
                 const clips = gltf.animations || [];

@@ -23,6 +23,16 @@ export default function CustomDialog(props) {
     const classes = useStyles();
     // const [fullWidth, setFullWidth] = React.useState(true);
     // const [maxWidth, setMaxWidth] = React.useState('lg');
+    const [progress, setProgress] = React.useState(16.66);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setProgress((prevProgress) => (prevProgress >= 100 ? 101 : prevProgress + 16.66));
+        }, 600);
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
     
     const { isOpen, handleClose, model } = props;
     return (
@@ -82,7 +92,13 @@ export default function CustomDialog(props) {
                                 <div className={classes.modelContainer} style={{}}>
                                     <div className={classes.modelMain} style={{}}>
                                         <div className={classes.viewer}>
-                                            <Viewport3D model={model} viewport={classes.iframeView} />
+                                            <Viewport3D
+                                                model={model}
+                                                viewport={classes.iframeView}
+                                                boxContainer={classes.boxContainer}
+                                                linearBar={classes.linearBar}
+                                                progress={progress}
+                                            />
                                         </div>
                                     </div>
                                 </div>

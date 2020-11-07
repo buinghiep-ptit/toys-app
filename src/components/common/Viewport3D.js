@@ -22,7 +22,10 @@ import {
     SphereGeometry,
     MeshBasicMaterial,
     Mesh,
-    DoubleSide
+    DoubleSide,
+    AudioListener,
+    AudioLoader,
+    Audio
 } from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { ZipLoader } from '../../../src/zip-loader/ZipLoader.js';
@@ -38,6 +41,11 @@ import { GUI } from 'dat.gui';
 import { createBackground } from '../../../src/lib/three-vignette.js';
 import { MeshoptDecoder } from '../../../src/gltf-pack/js/meshopt_decoder.js';
 
+// @mui core
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+// 
 const DEFAULT_CAMERA = '[default]';
 
 const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -110,12 +118,12 @@ export default class Viewport3D extends Component {
             directIntensity: 0.8 * Math.PI, // TODO(#116)
             directColor: 0xFFFFFF,
             bgColor1: '#ffffff',
-            bgColor2: '#353535'
+            bgColor2: '#353535',
         };
 
     }
     componentDidMount() {
-        const {model} = this.props;
+        const { model } = this.props;
         this.model = model;
         this.el = this.mount;
         // this.options = options;
@@ -139,15 +147,15 @@ export default class Viewport3D extends Component {
         this.defaultCamera = new PerspectiveCamera(fov, this.el.clientWidth / this.el.clientHeight, 0.01, 1000);
         this.activeCamera = this.defaultCamera;
         this.scene.add(this.defaultCamera);
-        if( /Android|webOS|Mac|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (/Android|webOS|Mac|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             this.renderer = window.renderer = new WebGLRenderer({ antialias: true });
             console.log("MB - OS");
         }
-        else    {
+        else {
             this.renderer = window.renderer = new WebGLRenderer({ antialias: false });
             console.log("PC");
         }
-    
+
         this.renderer.physicallyCorrectLights = true;
         this.renderer.outputEncoding = sRGBEncoding;
         this.renderer.setClearColor(0xcccccc);
@@ -189,6 +197,28 @@ export default class Viewport3D extends Component {
 
         // this.clear();
 
+        this.listener = new AudioListener();
+        this.defaultCamera.add( this.listener );
+
+        // create a global audio source
+        this.sound = new Audio( this.listener );
+
+        // load a sound and set it as the Audio object's buffer
+        this.audioLoader = new AudioLoader();
+
+        this.promise = Promise.resolve(this.props.model);
+        this.promise.then( 
+            model => {
+                this.audioLoader.load( model.audio, ( buffer ) => {
+                    this.sound.setBuffer( buffer );
+                    this.sound.setLoop( false );
+                    this.sound.setVolume( 1 );
+                    // if(this.props.progress >= 100)
+                    //     this.sound.play();
+                });
+            }
+         )
+
         this.loadSphere360();
         // this.loadPanorama();
         this.loadModel();
@@ -204,10 +234,15 @@ export default class Viewport3D extends Component {
     }
     componentWillUnmount() {
         this.stop()
+        this.sound.pause();
         this.mount.removeChild(this.renderer.domElement);
         window.removeEventListener('resize', this.resize.bind(this), false);
     }
-
+    componentDidUpdate() {
+        if(this.props.progress >= 100) {
+            this.sound.play();
+        }
+    }
     start() {
         if (!this.frameId) {
             this.frameId = requestAnimationFrame(this.animate)
@@ -782,79 +817,79 @@ export default class Viewport3D extends Component {
     //         });
     //     }
     // }
-    updateGUI () {
+    updateGUI() {
         this.cameraFolder.domElement.style.display = 'none';
-    
+
         this.morphCtrls.forEach((ctrl) => ctrl.remove());
         this.morphCtrls.length = 0;
         this.morphFolder.domElement.style.display = 'none';
-    
+
         this.animCtrls.forEach((ctrl) => ctrl.remove());
         this.animCtrls.length = 0;
         this.animFolder.domElement.style.display = 'none';
-    
+
         const cameraNames = [];
         const morphMeshes = [];
         this.content.traverse((node) => {
-          if (node.isMesh && node.morphTargetInfluences) {
-            morphMeshes.push(node);
-          }
-          if (node.isCamera) {
-            node.name = node.name || `VIEWER__camera_${cameraNames.length + 1}`;
-            cameraNames.push(node.name);
-          }
+            if (node.isMesh && node.morphTargetInfluences) {
+                morphMeshes.push(node);
+            }
+            if (node.isCamera) {
+                node.name = node.name || `VIEWER__camera_${cameraNames.length + 1}`;
+                cameraNames.push(node.name);
+            }
         });
-    
+
         if (cameraNames.length) {
-          this.cameraFolder.domElement.style.display = '';
-          if (this.cameraCtrl) this.cameraCtrl.remove();
-          const cameraOptions = [DEFAULT_CAMERA].concat(cameraNames);
-          this.cameraCtrl = this.cameraFolder.add(this.state, 'camera', cameraOptions);
-          this.cameraCtrl.onChange((name) => this.setCamera(name));
+            this.cameraFolder.domElement.style.display = '';
+            if (this.cameraCtrl) this.cameraCtrl.remove();
+            const cameraOptions = [DEFAULT_CAMERA].concat(cameraNames);
+            this.cameraCtrl = this.cameraFolder.add(this.state, 'camera', cameraOptions);
+            this.cameraCtrl.onChange((name) => this.setCamera(name));
         }
-    
+
         if (morphMeshes.length) {
-          this.morphFolder.domElement.style.display = '';
-          morphMeshes.forEach((mesh) => {
-            if (mesh.morphTargetInfluences.length) {
-              const nameCtrl = this.morphFolder.add({name: mesh.name || 'Untitled'}, 'name');
-              this.morphCtrls.push(nameCtrl);
-            }
-            for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
-              const ctrl = this.morphFolder.add(mesh.morphTargetInfluences, i, 0, 1, 0.01).listen();
-              Object.keys(mesh.morphTargetDictionary).forEach((key) => {
-                if (key && mesh.morphTargetDictionary[key] === i) ctrl.name(key);
-              });
-              this.morphCtrls.push(ctrl);
-            }
-          });
-        }
-    
-        if (this.clips.length) {
-          this.animFolder.domElement.style.display = '';
-          const actionStates = this.state.actionStates;
-          this.clips.forEach((clip, clipIndex) => {
-            // Autoplay the first clip.
-            let action;
-            if (clipIndex === 0) {
-              actionStates[clip.name] = true;
-              action = this.mixer.clipAction(clip);
-              action.play();
-            } else {
-              actionStates[clip.name] = false;
-            }
-    
-            // Play other clips when enabled.
-            const ctrl = this.animFolder.add(actionStates, clip.name).listen();
-            ctrl.onChange((playAnimation) => {
-              action = action || this.mixer.clipAction(clip);
-              action.setEffectiveTimeScale(1);
-              playAnimation ? action.play() : action.stop();
+            this.morphFolder.domElement.style.display = '';
+            morphMeshes.forEach((mesh) => {
+                if (mesh.morphTargetInfluences.length) {
+                    const nameCtrl = this.morphFolder.add({ name: mesh.name || 'Untitled' }, 'name');
+                    this.morphCtrls.push(nameCtrl);
+                }
+                for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
+                    const ctrl = this.morphFolder.add(mesh.morphTargetInfluences, i, 0, 1, 0.01).listen();
+                    Object.keys(mesh.morphTargetDictionary).forEach((key) => {
+                        if (key && mesh.morphTargetDictionary[key] === i) ctrl.name(key);
+                    });
+                    this.morphCtrls.push(ctrl);
+                }
             });
-            this.animCtrls.push(ctrl);
-          });
         }
-      }
+
+        if (this.clips.length) {
+            this.animFolder.domElement.style.display = '';
+            const actionStates = this.state.actionStates;
+            this.clips.forEach((clip, clipIndex) => {
+                // Autoplay the first clip.
+                let action;
+                if (clipIndex === 0) {
+                    actionStates[clip.name] = true;
+                    action = this.mixer.clipAction(clip);
+                    action.play();
+                } else {
+                    actionStates[clip.name] = false;
+                }
+
+                // Play other clips when enabled.
+                const ctrl = this.animFolder.add(actionStates, clip.name).listen();
+                ctrl.onChange((playAnimation) => {
+                    action = action || this.mixer.clipAction(clip);
+                    action.setEffectiveTimeScale(1);
+                    playAnimation ? action.play() : action.stop();
+                });
+                this.animCtrls.push(ctrl);
+            });
+        }
+    }
 
     clear() {
 
@@ -894,7 +929,25 @@ export default class Viewport3D extends Component {
     }
     render() {
         return (
-            <div className={this.props.viewport} ref={(mount) => { this.mount = mount }} />
+            <div className={this.props.viewport} ref={(mount) => { this.mount = mount }} >
+                {
+                    (this.props.progress < 100) && (<Box alignItems="center" className={this.props.boxContainer}>
+                        <Box minWidth={35} style={{ color: "white" }}>
+                            <Typography
+                                variant="body2"
+                            >
+                                {`Đang tải mô hình...${Math.round(this.props.progress,)}%`}
+                            </Typography>
+                        </Box>
+                        <Box width="33.33%" mr={1}>
+                            <LinearProgress
+                                className={this.props.linearBar}
+                                variant="determinate"
+                                value={this.props.progress} />
+                        </Box>
+                    </Box>)
+                }
+            </div>
         );
     }
 };

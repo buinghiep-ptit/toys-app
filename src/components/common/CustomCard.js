@@ -50,9 +50,22 @@ export default function CustomCard(props) {
     setTimeout(() => {
         setLoading(false);
     }, 2500);
+
+    const [state, setState] = React.useState({
+        raised:false,
+        shadow:1,
+    })
+
     const {model} = props;
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root}
+            classes={{root: state.raised ? classes.cardHovered : ""}}
+            onMouseOver={()=>setState({ raised: true, shadow:3})} 
+            onMouseOut={()=>setState({ raised:false, shadow:1 })} 
+            onTouchStart={()=>setState({ raised: true, shadow:3})}
+            onTouchEnd={()=>setState({ raised: false, shadow:1})}
+            raised={state.raised} zdepth={state.shadow}
+        >
             <CardHeader
                 className={classes.header}
                 avatar={

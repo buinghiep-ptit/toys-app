@@ -15,6 +15,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Viewport3D from './Viewport3D.js';
+import ViewportVR from './ViewportVR.js';
+
 import styles from '../../assets/jss/material-kit-react/common/customDialogStyle.js';
 
 const useStyles = makeStyles(styles);
@@ -92,7 +94,7 @@ export default function CustomDialog(props) {
                                 <div className={classes.modelContainer} style={{}}>
                                     <div className={classes.modelMain} style={{}}>
                                         <div className={classes.viewer}>
-                                            <Viewport3D
+                                            <ViewportVR
                                                 model={model}
                                                 viewport={classes.iframeView}
                                                 boxContainer={classes.boxContainer}

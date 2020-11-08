@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Header from "../components/header/Header";
 import Parallax from "../components/parallax/Parallax";
 import Main from "../components/main/Main";
+import Footer from "../components/footer/Footer";
 
 import { makeStyles } from "@material-ui/core/styles"; 
 import styles from '../assets/jss/material-kit-react/appStyle.js';
@@ -30,6 +31,7 @@ function App(props) {
         <div className={classNames(classes.main, classes.mainRaised)}>
           <Main />
         </div>
+        <Footer />
       </div>
     );
   }

@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './views/App.js';
+
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+
 import reportWebVitals from './reportWebVitals';
 
 import "./assets/scss/material-kit-react.scss?v=1.9.0";
 
+import Login from './views/Login.js';
+import App from './views/App.js';
+var history = createBrowserHistory();
+
 ReactDOM.render(
-    <App />,
+  <Router history={history}>
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route path="/" exact component={App} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 

@@ -249,7 +249,7 @@ export default class Viewport3D extends Component {
     }
     start() {
         if (!this.frameId) {
-            this.frameId = this.renderer.setAnimationLoop(this.renderScene)
+            this.frameId = window.requestAnimationFrame(this.animate);
         }
     }
 
@@ -257,8 +257,7 @@ export default class Viewport3D extends Component {
         cancelAnimationFrame(this.frameId)
     }
     animate = (time) => {
-        console.log("RUNNING!");
-        // this.frameId = window.requestAnimationFrame(this.animate)
+        this.frameId = window.requestAnimationFrame(this.animate)
         const dt = (time - this.prevTime) / 1000;
 
         this.controls.update();

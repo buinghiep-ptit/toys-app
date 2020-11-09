@@ -230,8 +230,6 @@ export default class Viewport3D extends Component {
         this.addGUI();
         // if (options.kiosk) this.gui.close();
 
-        // this.animate = this.animate.bind(this);
-        // requestAnimationFrame(this.animate);
         window.addEventListener('resize', this.resize.bind(this), false);
         this.start();
         // this.animate();
@@ -249,27 +247,25 @@ export default class Viewport3D extends Component {
     }
     start() {
         if (!this.frameId) {
-            this.frameId = window.requestAnimationFrame(this.animate);
+            // this.frameId = window.requestAnimationFrame(this.animate);
+            this.frameId = this.renderer.setAnimationLoop(this.renderScene);
         }
     }
 
     stop() {
         cancelAnimationFrame(this.frameId)
     }
-    animate = (time) => {
-        this.frameId = window.requestAnimationFrame(this.animate)
-        const dt = (time - this.prevTime) / 1000;
+    animate = () => {
+        console.log("RUN!");
+        this.renderer.setAnimationLoop(this.renderScene);
+    }
 
+    renderScene = (time) => {
+        const dt = (time - this.prevTime) / 1000;
         this.controls.update();
         this.stats.update();
         this.mixer && this.mixer.update(dt);
-        this.renderer.setAnimationLoop(this.renderScene);
-
         this.prevTime = time;
-
-    }
-
-    renderScene = () => {
 
         this.renderer.render(this.scene, this.activeCamera);
         if (this.state.grid) {
@@ -278,24 +274,6 @@ export default class Viewport3D extends Component {
             this.axesRenderer.render(this.axesScene, this.axesCamera);
         }
     }
-    // animate = (time) => {
-    //     // requestAnimationFrame(this.animate);
-    //     // this.cube.rotation.x += 0.005;
-    //     // this.cube.rotation.y += 0.01;
-    //     // this.renderScene();
-    //     const dt = (time - this.prevTime) / 1000;
-
-    //     this.controls.update();
-    //     this.stats.update();
-    //     this.mixer && this.mixer.update(dt);
-    //     console.log("RUNNING!!!")
-    //     this.renderer.setAnimationLoop(this.renderScene);
-    //   }
-    
-    //   renderScene = () => {
-    //     this.renderer.render(this.scene, this.defaultCamera);
-    //   }
-    
 
     resize() {
 

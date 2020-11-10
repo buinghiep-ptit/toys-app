@@ -33,7 +33,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+// import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { VRButton } from '../../../src/webxr/VRButton.js';
 // import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
 
 import { GUI } from 'dat.gui';

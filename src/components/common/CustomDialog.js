@@ -94,7 +94,7 @@ export default function CustomDialog(props) {
                                 <div className={classes.modelContainer} style={{}}>
                                     <div className={classes.modelMain} style={{}}>
                                         <div className={classes.viewer}>
-                                            <Viewport3D
+                                            <ViewportVR
                                                 model={model}
                                                 viewport={classes.iframeView}
                                                 boxContainer={classes.boxContainer}

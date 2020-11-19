@@ -27,7 +27,7 @@ function App(props) {
         />
 
         <Parallax/>
-
+        
         <div className={classNames(classes.main, classes.mainRaised)}>
           <Main />
         </div>

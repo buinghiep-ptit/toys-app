@@ -135,6 +135,15 @@ const customDialogStyle = {
     overflow: "hidden",
     transform: "translateZ(0)",
     transition: "opacity .25s"
+  },
+  controls : {
+    display: "flex",
+    position : "absolute",
+    bottom : 0,
+    right: 0,
+    left: 0,
+    // height: "28px",
+    // backgroundColor: "brown"
   }
 }
 export default customDialogStyle

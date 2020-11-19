@@ -47,6 +47,14 @@ import { MeshoptDecoder } from '../../../src/gltf-pack/js/meshopt_decoder.js';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+// @mui icon
+import RoomIcon from '@material-ui/icons/Room';
+import LocationOffIcon from '@material-ui/icons/LocationOff';
+
+import OSMBasic from '../common/osm/CustomOSM.js';
+
+import styles from '../../assets/jss/material-kit-react/common/customOSMStyle.js';
 // 
 const DEFAULT_CAMERA = '[default]';
 
@@ -110,7 +118,6 @@ export default class Viewport3D extends Component {
             wireframe: false,
             skeleton: false,
             grid: false,
-
             // Lights
             addLights: true,
             exposure: 1.0,
@@ -121,8 +128,20 @@ export default class Viewport3D extends Component {
             directColor: 0xFFFFFF,
             bgColor1: '#ffffff',
             bgColor2: '#353535',
+
+            isOSMOpen: false
         };
 
+    }
+    handlerOpenOSM = () => {
+        this.setState({
+            isOSMOpen: true
+        });
+    }
+    handlerCloseOSM = () => {
+        this.setState({
+            isOSMOpen: false
+        });
     }
     componentDidMount() {
         const { model } = this.props;
@@ -138,8 +157,9 @@ export default class Viewport3D extends Component {
         this.prevTime = 0;
 
         this.stats = new Stats();
-        this.stats.dom.height = '48px';
-        [].forEach.call(this.stats.dom.children, (child) => (child.style.display = ''));
+        this.stats.dom.height = '24px';
+        // [].forEach.call(this.stats.dom.children, (child) => (child.style.display = ''));--display all info
+        
 
         this.scene = new Scene();
 
@@ -186,6 +206,7 @@ export default class Viewport3D extends Component {
         this.vignette.renderOrder = -1;
 
         this.renderer.xr.enabled = true;
+        this.mount.appendChild(this.stats.dom);
         this.mount.appendChild(this.renderer.domElement);
         this.mount.appendChild(VRButton.createButton(this.renderer));
 
@@ -202,33 +223,33 @@ export default class Viewport3D extends Component {
         // this.clear();
 
         this.listener = new AudioListener();
-        this.defaultCamera.add( this.listener );
+        this.defaultCamera.add(this.listener);
 
         // create a global audio source
-        this.sound = new Audio( this.listener );
+        this.sound = new Audio(this.listener);
 
         // load a sound and set it as the Audio object's buffer
         this.audioLoader = new AudioLoader();
 
         this.promise = Promise.resolve(this.props.model);
-        this.promise.then( 
+        this.promise.then(
             model => {
-                this.audioLoader.load( model.audio, ( buffer ) => {
-                    this.sound.setBuffer( buffer );
-                    this.sound.setLoop( false );
-                    this.sound.setVolume( 1 );
+                this.audioLoader.load(model.audio, (buffer) => {
+                    this.sound.setBuffer(buffer);
+                    this.sound.setLoop(false);
+                    this.sound.setVolume(1);
                     // if(this.props.progress >= 100)
                     //     this.sound.play();
                 });
             }
-         )
+        )
 
         this.loadSphere360();
         // this.loadPanorama();
         this.loadModel();
 
         this.addAxesHelper();
-        this.addGUI();
+        // this.addGUI();
         // if (options.kiosk) this.gui.close();
 
         window.addEventListener('resize', this.resize.bind(this), false);
@@ -236,13 +257,13 @@ export default class Viewport3D extends Component {
         // this.animate();
     }
     componentWillUnmount() {
-        this.stop()
-        this.sound.pause();
+        this.stop();
+        this.sound.stop();
         this.mount.removeChild(this.renderer.domElement);
         window.removeEventListener('resize', this.resize.bind(this), false);
     }
     componentDidUpdate() {
-        if(this.props.progress >= 100) {
+        if (this.props.progress >= 100) {
             this.sound.play();
         }
     }
@@ -436,7 +457,8 @@ export default class Viewport3D extends Component {
         this.setClips(clips);
 
         this.updateLights();
-        this.updateGUI();
+        // this.updateGUI();
+        this.playAllClips();
         this.updateEnvironment();
         this.updateTextureEncoding();
         this.updateDisplay();
@@ -856,8 +878,40 @@ export default class Viewport3D extends Component {
     render() {
         return (
             <div className={this.props.viewport} ref={(mount) => { this.mount = mount }} >
+                <div className={this.props.controlsManager}>
+                    <IconButton
+                        onClick={this.handlerOpenOSM}
+                        style={{ padding: "4px" }}
+                        aria-label="close">
+                        <RoomIcon style={{ color: "white" }} />
+                    </IconButton>
+                </div>
                 {
-                    (this.props.progress < 100) && (<Box alignItems="center" className={this.props.boxContainer}>
+                    this.state.isOSMOpen && <div style={styles.popup}>
+                        <div style={styles.popupContainer}>
+                            <div style={styles.popupContent}>
+                                <div style={styles.popupModel}>
+                                    <div style={styles.modelContainer}>
+                                        <div style={styles.modelMain}>
+                                            <div style={styles.viewer}>
+                                                <OSMBasic iframeView={styles.iframeView} />
+                                                <IconButton
+                                                    onClick={this.handlerCloseOSM}
+                                                    className={this.props.controlsManager}
+                                                    style={{ zIndex: 1000 }}
+                                                    aria-label="close">
+                                                    <LocationOffIcon style={{ color: "white" }} />
+                                                </IconButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                {
+                    (this.props.progress < 100) && (<Box ref={(controlsManager) => { this.controlsManager = controlsManager }} alignItems="center" className={this.props.boxContainer}>
                         <Box minWidth={35} style={{ color: "white" }}>
                             <Typography
                                 variant="body2"

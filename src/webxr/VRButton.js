@@ -36,7 +36,7 @@ class VRButton {
 				session.addEventListener( 'end', onSessionEnded );
 
 				renderer.xr.setSession( session );
-				div.textContent = 'EXIT VR';
+				// div.textContent = 'EXIT VR';
 
 				currentSession = session;
 
@@ -46,7 +46,7 @@ class VRButton {
 
 				currentSession.removeEventListener( 'end', onSessionEnded );
 
-				div.textContent = 'ENTER VR';
+				// div.textContent = 'ENTER VR';
 
 				currentSession = null;
 
@@ -142,7 +142,7 @@ class VRButton {
 
 			element.style.position = 'absolute';
 			element.style.bottom = '0px';
-			element.style.padding = '6px 3px';
+			element.style.padding = '4px';
 			// element.style.border = '1px solid #fff';
 			element.style.borderRadius = '4px';
 			element.style.background = 'rgba(0,0,0,0.1)';

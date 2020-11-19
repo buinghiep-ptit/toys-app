@@ -3,11 +3,11 @@ import { grey } from "@material-ui/core/colors";
 const customCardStyle = theme => ({
     root: {
       maxWidth: "100%",
-      transition: "transform 0.25s ease-in-out"
-      // "&:hover,&:focus": {
-      //   transition: "transform 0.25s ease-in-out",
-      //   transform: "scale3d(1.025, 1.025, 1)"
-      // }
+      // transition: "transform 0.25s ease-in-out"
+      "&:hover,&:focus": {
+        transition: "transform 0.25s ease-in-out",
+        transform: "scale3d(1.025, 1.025, 1)"
+      }
     },
     cardHovered: {
       transform: "scale3d(1.025, 1.025, 1)"

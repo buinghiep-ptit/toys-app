@@ -14,7 +14,6 @@ import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import Viewport3D from './Viewport3D.js';
 import ViewportVR from './ViewportVR.js';
 
 import styles from '../../assets/jss/material-kit-react/common/customDialogStyle.js';
@@ -100,6 +99,7 @@ export default function CustomDialog(props) {
                                                 boxContainer={classes.boxContainer}
                                                 linearBar={classes.linearBar}
                                                 progress={progress}
+                                                controlsManager={classes.controls}
                                             />
                                         </div>
                                     </div>

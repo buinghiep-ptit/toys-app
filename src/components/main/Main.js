@@ -68,24 +68,24 @@ const listModel = [
 export default function Main() {
     const classes = useStyles();
 
-    const [productList, setProductList] = React.useState([]);
+    // const [productList, setProductList] = React.useState([]);
 
-    React.useEffect(() => {
-        const fetchProductList = async () => {
-            try {
-                const params = {
-                    politician_name : 'Le_Loi'
-                };
-                const response = await productApi.getAll(params);
-                // console.log(response);
-                setProductList(response.data);
-            } catch (error) {
-                console.log('Failed to fetch product list: ', error);
-            }
-        }
+    // React.useEffect(() => {
+    //     const fetchProductList = async () => {
+    //         try {
+    //             const params = {
+    //                 politician_name : 'Le_Loi'
+    //             };
+    //             const response = await productApi.getAll(params);
+    //             // console.log(response);
+    //             setProductList(response.data);
+    //         } catch (error) {
+    //             console.log('Failed to fetch product list: ', error);
+    //         }
+    //     }
 
-        fetchProductList();
-    }, []);
+    //     fetchProductList();
+    // }, []);
     return (
         <div className={classes.sections}>
             <div className={classes.container}>

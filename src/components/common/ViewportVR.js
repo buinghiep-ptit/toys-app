@@ -51,6 +51,14 @@ import IconButton from '@material-ui/core/IconButton';
 // @mui icon
 import RoomIcon from '@material-ui/icons/Room';
 import LocationOffIcon from '@material-ui/icons/LocationOff';
+import InfoIcon from '@material-ui/icons/Info';
+import PersonIcon from '@material-ui/icons/Person';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import OSMBasic from '../common/osm/CustomOSM.js';
 
@@ -129,7 +137,10 @@ export default class Viewport3D extends Component {
             bgColor1: '#ffffff',
             bgColor2: '#353535',
 
-            isOSMOpen: false
+            isOSMOpen: false,
+            open : false,
+            openPerson : false,
+            scroll : "page"
         };
 
     }
@@ -141,6 +152,28 @@ export default class Viewport3D extends Component {
     handlerCloseOSM = () => {
         this.setState({
             isOSMOpen: false
+        });
+    }
+    handleInfoOpen = () => {
+        this.setState({
+            open: true
+        });
+        console.log(this.open);
+    }
+    handleInfoClose = () => {
+        this.setState({
+            open: false
+        });
+    }
+    handlePersonOpen = () => {
+        this.setState({
+            openPerson: true
+        });
+        console.log(this.open);
+    }
+    handlePersonClose = () => {
+        this.setState({
+            openPerson: false
         });
     }
     componentDidMount() {
@@ -159,7 +192,7 @@ export default class Viewport3D extends Component {
         this.stats = new Stats();
         this.stats.dom.height = '24px';
         // [].forEach.call(this.stats.dom.children, (child) => (child.style.display = ''));--display all info
-        
+
 
         this.scene = new Scene();
 
@@ -885,7 +918,67 @@ export default class Viewport3D extends Component {
                         aria-label="close">
                         <RoomIcon style={{ color: "white" }} />
                     </IconButton>
+                    <IconButton
+                        onClick={this.handleInfoOpen}
+                        style={{ padding: "4px" }}
+                        aria-label="close">
+                        <InfoIcon style={{ color: "white" }} />
+                    </IconButton>
+                    <IconButton
+                        onClick={this.handlePersonOpen}
+                        style={{ padding: "4px" }}
+                        aria-label="close">
+                        <PersonIcon style={{ color: "white" }} />
+                    </IconButton>
                 </div>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleInfoClose}
+                    scroll={'body'}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                >
+                    <DialogTitle id="scroll-dialog-title">Đền Hùng</DialogTitle>
+                    <DialogContent dividers="true">
+                        <DialogContentText
+                            id="scroll-dialog-description"
+                            tabIndex={-1}
+                        >
+                            {[...new Array(10)]
+                                .map(
+                                    () => `Đền Hùng là tên gọi khái quát của Khu di tích lịch sử Đền Hùng - quần thể đền chùa thờ phụng các Vua Hùng và tôn thất của nhà vua trên núi Nghĩa Lĩnh, gắn với Giỗ Tổ Hùng Vương - Lễ hội Đền Hùng được tổ chức tại địa điểm đó hàng năm vào ngày 10 tháng 3 âm lịch. Hiện nay, theo các tài liệu khoa học đã công bố đa số đều thống nhất nền móng kiến trúc đền Hùng bắt đầu được xây dựng từ thời vua Đinh Tiên Hoàng trị vì. Đến thời Hậu Lê (thế kỷ 15) được xây dựng hoàn chỉnh theo quy mô như hiện tại.`,
+                                )
+                                .join('\n')}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+            
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.openPerson}
+                    onClose={this.handlePersonClose}
+                    scroll={'body'}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                >
+                    <DialogTitle id="scroll-dialog-title">Vua Hùng</DialogTitle>
+                    <DialogContent dividers="true">
+                        <DialogContentText
+                            id="scroll-dialog-description"
+                            tabIndex={-1}
+                        >
+                            {[...new Array(10)]
+                                .map(
+                                    () => `Hùng Vương (chữ Hán: 雄王, chữ Nôm:𤤰雄) là cách gọi dành cho các vị vua nước Văn Lang của người Lạc Việt. Theo truyền thuyết, Hùng Vương thứ I là con trai của Lạc Long Quân, lên ngôi vào năm 2879 trước công nguyên, đặt quốc hiệu là Văn Lang, chia nước làm 15 bộ, truyền đời đến năm 258 trước công nguyên thì bị Thục Phán (An Dương Vương) chiếm mất nước.[1] Truyền thuyết về Hùng Vương được ghi chép lại lần đầu tiên vào cuối đời Trần tại Hồng Bàng Thị truyện trong sách Lĩnh Nam chích quái; sau đó được sử gia Ngô Sĩ Liên đưa vào Đại Việt Sử kí Toàn thư ở cuối thế kỉ XV.[.`,
+                                )
+                                .join('\n')}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+            
+                    </DialogActions>
+                </Dialog>
                 {
                     this.state.isOSMOpen && <div style={styles.popup}>
                         <div style={styles.popupContainer}>

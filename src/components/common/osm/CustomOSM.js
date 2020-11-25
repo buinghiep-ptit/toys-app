@@ -17,8 +17,8 @@ const markerIcon = new L.Icon({
 });
 
 const OSMBasic = (props) => {
-    const [center, setCenter] = React.useState({ lat: 20.980585, lng: 105.787936 });//20.980585, 105.787936
-    const ZOOM_LEVEL = 17;
+    const [center, setCenter] = React.useState({ lat: 21.36732334461775, lng: 105.32053022429396 });//20.980585, 105.787936
+    const ZOOM_LEVEL = 17/2 + 1.5;
     const mapRef = React.useRef();
     const { iframeView } = props;
     return (
@@ -29,7 +29,7 @@ const OSMBasic = (props) => {
             />
             {cities.map((city, idx) => (
                 <Marker
-                    position={[20.980585,105.787936]}
+                    position={[21.36732334461775,105.32053022429396]}
                     icon={markerIcon}
                     key={idx}
                 >

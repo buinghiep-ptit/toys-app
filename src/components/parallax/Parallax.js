@@ -17,7 +17,7 @@ export default function Parallax(props) {
     return (
         <div className={classes.parallax}>
             <div className={classes.content}>
-                <Panorama360 className={classes.viewport}></Panorama360>
+                {/* <Panorama360 className={classes.viewport}></Panorama360> */}
             </div>
         </div>
     )

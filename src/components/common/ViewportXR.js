@@ -855,7 +855,7 @@ export default class ViewportXR extends Component {
                             <Typography
                                 variant="body2"
                             >
-                                {`Đang tải mô hình...${Math.round(this.props.progress,)}%`}
+                                {`Đang tải mô hình...${Math.round(this.props.progress)}%`}
                             </Typography>
                         </Box>
                         <Box width="33.33%" mr={1}>

@@ -6,19 +6,24 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import reportWebVitals from './reportWebVitals';
 
-import "./assets/scss/material-kit-react.scss?v=1.9.0";
+import { Provider } from 'react-redux';
+import store from './store';
+
+import "assets/scss/material-kit-react.scss?v=1.9.0";
 
 import Login from './views/Login.js';
 import App from './views/App.js';
 var history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/" exact component={App} />
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/" exact component={App} />
+      </Switch>
+    </Router>,
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -3,10 +3,10 @@ const customDialogStyle = {
       fontFamily: "Open Sans,sans-serif",
       boxSizing: "border-box",
       display: "block",
-      "@media (max-width: 768px)":
-      {
-        width: "100vw!important"
-      },
+      // "@media (max-width: 768px)":
+      // {
+      //   width: "100vw!important"
+      // },
       zIndex : 999
     },
     popupContainer: {
@@ -32,12 +32,12 @@ const customDialogStyle = {
       boxSizing: "border-box",
       marginTop: "0",
       position: "absolute",
-      left: "12px",
-      top: "10px",
-      "@media (max-width: 768px)":
-      {
-        left: "10px"
-      }
+      left: "240px",
+      top: "50px",
+      // "@media (max-width: 768px)":
+      // {
+      //   left: "10px"
+      // }
     },
     popupModel: {
       fontFamily: "Open Sans,sans-serif",
@@ -49,11 +49,11 @@ const customDialogStyle = {
       marginTop: "0",
       marginBottom: "40px",
       maxWidth: "2000px",
-      width: "calc(100vw - 24px)",
-      "@media (max-width: 768px)":
-      {
-        width: "calc(100vw - 5px)"
-      }
+      width: "calc(100vw - 480px)",
+      // "@media (max-width: 768px)":
+      // {
+      //   width: "calc(100vw - 5px)"
+      // }
     },
     modelContainer: {
       fontFamily: "Open Sans,sans-serif",
@@ -65,14 +65,14 @@ const customDialogStyle = {
       backgroundColor: "#EEE",
       width: "100%",
       marginTop: "0",
-      "@media (max-width: 960px)":
-      {
-        flexDirection: "column"
-      },
-      "@media (max-width: 768px)":
-      {
-        padding: "12px!important"
-      }
+      // "@media (max-width: 960px)":
+      // {
+      //   flexDirection: "column"
+      // },
+      // "@media (max-width: 768px)":
+      // {
+      //   padding: "12px!important"
+      // }
     },
     modelMain: {
       fontFamily: "Open Sans,sans-serif",
@@ -81,10 +81,10 @@ const customDialogStyle = {
       maxWidth: "calc(100% - 0px)",
       marginTop: "0",
       WebkitFontSmoothing: "antialiased",
-      "@media (max-width: 960px)":
-      {
-        maxWidth: "none"
-      }
+      // "@media (max-width: 960px)":
+      // {
+      //   maxWidth: "none"
+      // }
     },
     viewer: {
       fontFamily: "Open Sans,sans-serif",

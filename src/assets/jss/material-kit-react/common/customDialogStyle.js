@@ -47,8 +47,11 @@ const customDialogStyle = {
     backgroundColor: "#fff",
     borderRadius: "3px",
     boxShadow: "0 11px 20px 0 rgba(97,108,121,.17)",
+    overflowY: "auto",
+    overflowX: "hidden",
+    maxHeight: "90vh",
     marginTop: "0",
-    marginBottom: "40px",
+    marginBottom: "0",
     maxWidth: "2000px",
     width: "calc(100vw - 100px)",
     "@media (max-width: 768px)":
@@ -647,29 +650,29 @@ const customDialogStyle = {
     // visibility: "hidden"
   },
   // comment
-  commentWrapper : {
+  commentWrapper: {
     boxSizing: "border-box",
     marginBottom: "0"
   },
-  modelFeedback : {
+  modelFeedback: {
     boxSizing: "border-box",
     marginTop: "0",
     marginBottom: "0"
   },
-  tabs :{
+  tabs: {
     boxSizing: "border-box",
     display: "block",
     marginTop: "0",
     marginBottom: "0",
-    padding : "0 20px"
+    padding: "0 20px"
   },
-  tabsHeader : {
+  tabsHeader: {
     boxSizing: "border-box",
     // display: "flex",
     borderBottom: "1px solid #e7e7e7",
     marginTop: "0"
   },
-  tabPage : {
+  tabPage: {
     boxSizing: "border-box",
     position: "relative",
     padding: "0 20px",

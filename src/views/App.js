@@ -6,6 +6,8 @@ import Parallax from "../components/parallax/Parallax";
 import Main from "../components/main/Main";
 import Footer from "../components/footer/Footer";
 
+import img from "../assets/img/thumb-lol-1.jpg";
+
 import { makeStyles } from "@material-ui/core/styles"; 
 import styles from '../assets/jss/material-kit-react/appStyle.js';
 const useStyles = makeStyles(styles);
@@ -26,7 +28,7 @@ function App(props) {
         {...rest}
         />
 
-        <Parallax/>
+        <Parallax image={img} />
         
         <div className={classNames(classes.main, classes.mainRaised)}>
           <Main />

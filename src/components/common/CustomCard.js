@@ -23,49 +23,28 @@ import CustomDialog from './CustomDialog.js';
 
 import styles from '../../assets/jss/material-kit-react/common/customCardStyle';
 const useStyles = makeStyles(styles);
-export default function CustomCard(props) {
-
+function CustomCard(props) {
+    console.log("custom card!");
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    React.useEffect(() => {
-        // console.log(open);
-    })
+
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
-    const descriptionElementRef = React.useRef(null);
-    React.useEffect(() => {
-        if (open) {
-            const { current: descriptionElement } = descriptionElementRef;
-            if (descriptionElement !== null) {
-                descriptionElement.focus();
-            }
-        }
-    }, [open]);
-
     const [loading, setLoading] = React.useState(true);
-    setTimeout(() => {
-        setLoading(false);
-    }, 2500);
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2500);
+        return () => clearTimeout(timer);
+    }, []);
 
-    const [state, setState] = React.useState({
-        raised:false,
-        shadow:1,
-    })
-
-    const {model} = props;
+    const { model } = props;
     return (
-        <Card className={classes.root}
-            // classes={{root: state.raised ? classes.cardHovered : ""}}
-            // onMouseOver={()=>setState({ raised: true, shadow:3})} 
-            // onMouseOut={()=>setState({ raised:false, shadow:1 })} 
-            // onTouchStart={()=>setState({ raised: true, shadow:3})}
-            // onTouchEnd={()=>setState({ raised: false, shadow:1})}
-            // raised={state.raised} zdepth={state.shadow}
-        >
+        <Card className={classes.root}>
             <CardHeader
                 className={classes.header}
                 avatar={
@@ -90,16 +69,6 @@ export default function CustomCard(props) {
                         : model.dateCreation
                 }
             />
-            {/* <CardActionArea> */}
-            {/* <CardMedia
-                    className={classes.media}
-                    image={skin}
-                    title="Paella dish"
-                >
-                </CardMedia> */}
-            {/* <IconButton aria-label="money">
-                    <AttachMoneyIcon />
-                </IconButton> */}
 
             {loading ? <Skeleton animation="wave" variant="rect" className={classes.media} /> : (<div className={classes.mediaWrapper}>
                 <CardActionArea onClick={handleClickOpen}>
@@ -109,24 +78,20 @@ export default function CustomCard(props) {
                         title="Paella dish"
                     />
                 </CardActionArea>
-                {/* <div className={classes.layer}> */}
                 <IconButton aria-label="money" className={classNames(classes.layer)}>
                     <AttachMoneyIcon style={{ fontSize: "1rem", color: "white" }} />
                 </IconButton>
-                {/* </div> */}
                 {
 
                     open && <CustomDialog
-                        descriptionElementRef={descriptionElementRef}
                         isOpen={open}
                         model={model}
                         handleClose={handleClose} />
                 }
             </div>)
             }
-            {/* </CardActionArea> */}
             <CardActions className={classes.footer}>
-                { loading ? <Skeleton animation="wave" height={15} width="100%" style={{ marginBottom: 6 }} /> : <><IconButton
+                {loading ? <Skeleton animation="wave" height={15} width="100%" style={{ marginBottom: 6 }} /> : <><IconButton
                     className={classes.expand}
                     aria-label="share">
                     <ShareIcon style={{ fontSize: "1rem" }} />
@@ -160,3 +125,4 @@ export default function CustomCard(props) {
         </Card>
     )
 }
+export default React.memo(CustomCard);

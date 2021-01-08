@@ -23,24 +23,24 @@ import {
     MeshBasicMaterial,
     Mesh,
     DoubleSide,
-    AudioListener,
-    AudioLoader,
-    Audio
+    // AudioListener,
+    // AudioLoader,
+    // Audio
 } from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
-import { ZipLoader } from '../../../src/zip-loader/ZipLoader.js';
+import { ZipLoader } from '../../../src/lib/zip-loader/ZipLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 // import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
-import { VRButton } from '../../../src/webxr/VRButton.js';
+import { VRButton } from '../../../src/lib/webxr/VRButton.js';
 // import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
 
 import { GUI } from 'dat.gui';
 
 // import { environments } from '../assets/environment/index.js';
 import { createBackground } from '../../../src/lib/three-vignette.js';
-import { MeshoptDecoder } from '../../../src/gltf-pack/js/meshopt_decoder.js';
+import { MeshoptDecoder } from '../../../src/lib/gltf-pack/js/meshopt_decoder.js';
 
 // @mui core
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -110,7 +110,9 @@ export default class ViewportXR extends Component {
             directIntensity: 0.8 * Math.PI, // TODO(#116)
             directColor: 0xFFFFFF,
             bgColor1: '#ffffff',
-            bgColor2: '#353535'
+            bgColor2: '#353535',
+
+            model: props.model
         };
 
     }
@@ -130,7 +132,7 @@ export default class ViewportXR extends Component {
         this.stats = new Stats();
         this.stats.dom.height = '24px';
         // [].forEach.call(this.stats.dom.children, (child) => (child.style.display = ''));--display all info
-        
+
 
         this.scene = new Scene();
 
@@ -191,29 +193,7 @@ export default class ViewportXR extends Component {
         this.gridHelper = null;
         this.axesHelper = null;
 
-        // this.clear();
-
-        this.listener = new AudioListener();
-        this.defaultCamera.add(this.listener);
-
-        // create a global audio source
-        this.sound = new Audio(this.listener);
-
-        // load a sound and set it as the Audio object's buffer
-        this.audioLoader = new AudioLoader();
-
-        this.promise = Promise.resolve(this.props.model);
-        this.promise.then(
-            model => {
-                this.audioLoader.load(model.audio, (buffer) => {
-                    this.sound.setBuffer(buffer);
-                    this.sound.setLoop(false);
-                    this.sound.setVolume(1);
-                    // if(this.props.progress >= 100)
-                    //     this.sound.play();
-                });
-            }
-        )
+        this.clear();
 
         this.loadSphere360();
         // this.loadPanorama();
@@ -227,16 +207,17 @@ export default class ViewportXR extends Component {
         this.start();
         // this.animate();
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.model !== nextState.model) {
+            return true;
+        }
+        return false;
+    }
     componentWillUnmount() {
         this.stop();
-        this.sound.stop();
+        // this.sound.stop();
         this.mount.removeChild(this.renderer.domElement);
         window.removeEventListener('resize', this.resize.bind(this), false);
-    }
-    componentDidUpdate() {
-        if (this.props.progress >= 100) {
-            this.sound.play();
-        }
     }
     start() {
         if (!this.frameId) {
@@ -847,9 +828,10 @@ export default class ViewportXR extends Component {
         });
     }
     render() {
+        console.log("XR3D");
         return (
             <div className={this.props.viewport} ref={(mount) => { this.mount = mount }} >
-                {
+                {/* {
                     (this.props.progress < 100) && (<Box alignItems="center" className={this.props.boxContainer}>
                         <Box minWidth={35} style={{ color: "white" }}>
                             <Typography
@@ -865,7 +847,7 @@ export default class ViewportXR extends Component {
                                 value={this.props.progress} />
                         </Box>
                     </Box>)
-                }
+                } */}
             </div>
         );
     }

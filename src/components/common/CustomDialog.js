@@ -2,14 +2,6 @@ import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 
 import Dialog from '@material-ui/core/Dialog';
-// import Button from '@material-ui/core/Button';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-
-// import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -26,13 +18,14 @@ import CommentIcon from '@material-ui/icons/Comment';
 
 import Button from '../../components/common/CustomButton.js';
 
-import ViewportVR from './ViewportVR.js';
+import ViewportXR from './ViewportXR.js';
 
 import styles from '../../assets/jss/material-kit-react/common/customDialogStyle.js';
 
 const useStyles = makeStyles(styles);
 
 export default function CustomDialog(props) {
+    console.log("custom dialog!");
     const classes = useStyles();
     // const [fullWidth, setFullWidth] = React.useState(true);
     // const [maxWidth, setMaxWidth] = React.useState('lg');
@@ -50,7 +43,7 @@ export default function CustomDialog(props) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        // setValue(newValue);
     };
 
     const { isOpen, handleClose, model } = props;
@@ -65,39 +58,6 @@ export default function CustomDialog(props) {
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
             >
-                {/* <DialogTitle id="scroll-dialog-title">
-                Xem chi tiết
-                    <IconButton
-                        onClick={handleClose}
-                        style={{ float: "right", top: 0, right: 0, position: "absolute" }}
-                        aria-label="close">
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent dividers={true}> */}
-                {/* <DialogContentText
-                        id="scroll-dialog-description"
-                        ref={descriptionElementRef}
-                        tabIndex={-1}
-                    >
-                    </DialogContentText> */}
-                {/* <Grid container spacing={3}>
-                        <Grid item xs={12} sm={8} md={8} lg={8}
-                            className={classes.content}
-                            >
-                                <Viewport3D viewport={classes.viewport} />
-                            
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4} lg={4}>
-                            <Paper>xs=12 md=4</Paper>
-                        </Grid>
-                    </Grid> */}
-                {/* </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Thoát
-                     </Button>
-                </DialogActions> */}
                 <div className={classes.popup}>
                     <div className={classes.popupContainer} style={{}}>
                         <IconButton
@@ -112,12 +72,11 @@ export default function CustomDialog(props) {
                                     <div className={classes.modelMain} style={{}}>
                                         {/*  */}
                                         <div className={classes.viewer}>
-                                            <ViewportVR
+                                            <ViewportXR
                                                 model={model}
                                                 viewport={classes.iframeView}
                                                 boxContainer={classes.boxContainer}
                                                 linearBar={classes.linearBar}
-                                                progress={progress}
                                                 controlsManager={classes.controls}
                                             />
                                         </div>
@@ -129,14 +88,14 @@ export default function CustomDialog(props) {
                                                         {/*  */}
                                                         <h1 className={classes.modelName}>
                                                             <div style={{ display: "flex", alignItems: "center" }}>
-                                                                <span>Đền Hùng</span>
+                                                                <span>Model</span>
                                                             </div>
                                                             <span style={{ display: "block", fontSize: "12px", fontWeight: 400, color: "#888", marginTop: "-3px" }}>3D Model</span>
                                                         </h1>
                                                         {/*  */}
                                                         <div className={classes.ownerWrapper}>
                                                             <div className={classes.ownerCreator}>
-                                                                <a href className={classes.ownerAvatar}>
+                                                                <a href=" " className={classes.ownerAvatar}>
                                                                     {/* img container */}
                                                                     <div style={{ position: "relative", overflow: "hidden", borderRadius: "12%" }}>
                                                                         <img alt="" src="https://media.sketchfab.com/avatars/3664d40b58e043a680d79877fa28af0c/33815c2eed5e4707bc588f3fa2ead32f.jpeg"></img>
@@ -145,7 +104,7 @@ export default function CustomDialog(props) {
                                                                 <div style={{ boxSizing: "border-box" }}>
                                                                     <div className={classes.displayName}>
                                                                         <div className={classes.userName}>
-                                                                            <a href="/" className={classes.linkUserName}>
+                                                                            <a href=" " className={classes.linkUserName}>
                                                                                 Nghiep bui
                                                                             </a>
                                                                         </div>
@@ -177,7 +136,7 @@ export default function CustomDialog(props) {
                                                             <div className={classes.likesContainer}>
                                                                 <div className={classes.likesAvatar}>
                                                                     <div className={classes.avatarInline}>
-                                                                        <a href className={classes.a}>
+                                                                        <a href=" " className={classes.a}>
                                                                             <div className={classes.aImgContainer}>
                                                                                 <div style={{
                                                                                     paddingTop: "100%"
@@ -187,7 +146,7 @@ export default function CustomDialog(props) {
                                                                                 </img>
                                                                             </div>
                                                                         </a>
-                                                                        <a href className={classes.a} style={{ marginLeft: "5px" }}>
+                                                                        <a href=" " className={classes.a} style={{ marginLeft: "5px" }}>
                                                                             <div className={classes.aImgContainer}>
                                                                                 <div style={{
                                                                                     paddingTop: "100%"
@@ -197,7 +156,7 @@ export default function CustomDialog(props) {
                                                                                 </img>
                                                                             </div>
                                                                         </a>
-                                                                        <a href className={classes.a} style={{ marginLeft: "5px" }}>
+                                                                        <a href=" " className={classes.a} style={{ marginLeft: "5px" }}>
                                                                             <div className={classes.aImgContainer}>
                                                                                 <div style={{
                                                                                     paddingTop: "100%"
@@ -211,7 +170,7 @@ export default function CustomDialog(props) {
                                                                 </div>
                                                                 <div className={classes.likesName}>
                                                                     <div className={classes.userDspName}>
-                                                                        <a href className={classes.userDspNameLink}>
+                                                                        <a href=" " className={classes.userDspNameLink}>
                                                                             <div className={classes.userDspText}>
                                                                                 <span className={classes.spansText}>Hoan Nguyen</span>
                                                                             </div>
@@ -219,7 +178,7 @@ export default function CustomDialog(props) {
                                                                         <span>,&nbsp;</span>
                                                                     </div>
                                                                     <div className={classes.userDspName}>
-                                                                        <a href className={classes.userDspNameLink}>
+                                                                        <a href=" " className={classes.userDspNameLink}>
                                                                             <div className={classes.userDspText}>
                                                                                 <span className={classes.spansText}>Hung Truong</span>
                                                                             </div>
@@ -227,15 +186,15 @@ export default function CustomDialog(props) {
                                                                         <span>,&nbsp;</span>
                                                                     </div>
                                                                     <div className={classes.userDspName}>
-                                                                        <a href className={classes.userDspNameLink}>
+                                                                        <a href=" " className={classes.userDspNameLink}>
                                                                             <div className={classes.userDspText}>
                                                                                 <span className={classes.spansText}>Be Van Te</span>
                                                                             </div>
                                                                         </a>
                                                                     </div>
                                                                 &nbsp;và&nbsp;
-                                                                <a href className={classes.spansText}>5 người khác&nbsp;</a>
-                                                                    <span>thích địa điểm này</span>
+                                                                <a href=" " className={classes.spansText}>5 người khác&nbsp;</a>
+                                                                    <span>thích mô hình này</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -247,9 +206,9 @@ export default function CustomDialog(props) {
                                                                         Cửa hàng mô hình
                                                                     </h4>
                                                                 </div>
-                                                                <div class={classes.cardSliderLeft}>
+                                                                <div className={classes.cardSliderLeft}>
                                                                     <svg width="9" height="54" viewBox="0 0 9 54" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M1.518 27.17v-.26l.034.13-.034.13zm6.977 25.78l-.966.26L.516 27.04 7.53.87l.965.26-6.943 25.91 6.943 25.91zm0 0l-.966.26L.516 27.04 7.53.87l.965.26-6.943 25.91 6.943 25.91zM1.518 27.17v-.26l.034.13-.034.13zm-.01-.3l.044.17-.045.17-.966-.26.012-.04.483.13-.483.13-.01-.04.965-.26zm-.956.3l-.01-.04.965-.26.045.17-.045.17-.966-.26.012-.04.483.13-.483.13z" fill-rule="nonzero" fill="#df1660">
+                                                                        <path d="M1.518 27.17v-.26l.034.13-.034.13zm6.977 25.78l-.966.26L.516 27.04 7.53.87l.965.26-6.943 25.91 6.943 25.91zm0 0l-.966.26L.516 27.04 7.53.87l.965.26-6.943 25.91 6.943 25.91zM1.518 27.17v-.26l.034.13-.034.13zm-.01-.3l.044.17-.045.17-.966-.26.012-.04.483.13-.483.13-.01-.04.965-.26zm-.956.3l-.01-.04.965-.26.045.17-.045.17-.966-.26.012-.04.483.13-.483.13z" fillRule="nonzero" fill="#df1660">
                                                                         </path>
                                                                     </svg>
                                                                 </div>
@@ -258,22 +217,22 @@ export default function CustomDialog(props) {
                                                                         <div className={classes.gridItem}>
                                                                             <div className={classes.cardModel}>
                                                                                 <div className={classes.cardThumb}>
-                                                                                    <a href className={classes.cardThumbHref}>
+                                                                                    <a href=" " className={classes.cardThumbHref}>
                                                                                         <div className={classes.imageContainer}>
                                                                                             <div style={{ paddingTop: "56.25%" }}></div>
-                                                                                            <img alt="" className={classes.imgShow} src="https://image.vovworld.vn/630x378/Uploaded/vovworld/thpsplu/2018_09_02/quang-truong-ba-dinh-ha-noi1_USPY.jpg"></img>
+                                                                                            <img alt="" className={classes.imgShow} src="https://media.sketchfab.com/models/9c5a51a6e4a44b2a8142baeae763ebcf/thumbnails/552bb7365f524b4a99c3e76350872e07/a997086b1898404d962187da5f062dde.jpeg"></img>
                                                                                         </div>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div className={classes.cardFooter}>
-                                                                                    <span style={{ color: "#EEE" }}>Quảng Trường Ba Đình</span>
+                                                                                    <span style={{ color: "#EEE" }}>Javan IV</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div className={classes.gridItem}>
                                                                             <div className={classes.cardModel}>
                                                                                 <div className={classes.cardThumb}>
-                                                                                    <a href className={classes.cardThumbHref}>
+                                                                                    <a href=" " className={classes.cardThumbHref}>
                                                                                         <div className={classes.imageContainer}>
                                                                                             <div style={{ paddingTop: "56.25%" }}></div>
                                                                                             <img alt="" className={classes.imgShow} src="https://media.sketchfab.com/models/9c5a51a6e4a44b2a8142baeae763ebcf/thumbnails/552bb7365f524b4a99c3e76350872e07/a997086b1898404d962187da5f062dde.jpeg"></img>
@@ -286,7 +245,7 @@ export default function CustomDialog(props) {
                                                                         <div className={classes.gridItem}>
                                                                             <div className={classes.cardModel}>
                                                                                 <div className={classes.cardThumb}>
-                                                                                    <a href className={classes.cardThumbHref}>
+                                                                                    <a href=" " className={classes.cardThumbHref}>
                                                                                         <div className={classes.imageContainer}>
                                                                                             <div style={{ paddingTop: "56.25%" }}></div>
                                                                                             <img alt="" className={classes.imgShow} src="https://media.sketchfab.com/models/9c5a51a6e4a44b2a8142baeae763ebcf/thumbnails/552bb7365f524b4a99c3e76350872e07/a997086b1898404d962187da5f062dde.jpeg"></img>
@@ -299,7 +258,7 @@ export default function CustomDialog(props) {
                                                                         <div className={classes.gridItem}>
                                                                             <div className={classes.cardModel}>
                                                                                 <div className={classes.cardThumb}>
-                                                                                    <a href className={classes.cardThumbHref}>
+                                                                                    <a href=" " className={classes.cardThumbHref}>
                                                                                         <div className={classes.imageContainer}>
                                                                                             <div style={{ paddingTop: "56.25%" }}></div>
                                                                                             <img alt="" className={classes.imgShow} src="https://media.sketchfab.com/models/9c5a51a6e4a44b2a8142baeae763ebcf/thumbnails/552bb7365f524b4a99c3e76350872e07/a997086b1898404d962187da5f062dde.jpeg"></img>
@@ -311,9 +270,9 @@ export default function CustomDialog(props) {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class={classes.cardSliderRight}>
+                                                                <div className={classes.cardSliderRight}>
                                                                     <svg width="9" height="53" viewBox="0 0 9 53" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M7.977 26.04L1 0l6.977 26.04L1 52.08l6.977-26.04zm0 0l.01.04-.01-.04.01-.04-.01.04z" stroke="#df1660" fill="none" fill-rule="evenodd" stroke-linecap="square">
+                                                                        <path d="M7.977 26.04L1 0l6.977 26.04L1 52.08l6.977-26.04zm0 0l.01.04-.01-.04.01-.04-.01.04z" stroke="#df1660" fill="none" fillRule="evenodd" strokeLinecap="square">
 
                                                                         </path>
                                                                     </svg>

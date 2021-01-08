@@ -1,0 +1,1 @@
+export const ADD_NEW_LEGO = 'ADD_NEW_LEGO';

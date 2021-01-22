@@ -1,6 +1,6 @@
-import { defaultFont } from "../material-kit-react.js";
+import { defaultFont } from "assets/jss/material-kit-react.js";
 
-import tooltip from "./common/tooltipStyle.js";
+import tooltip from "assets/jss/material-kit-react/components/tooltipStyle.js";
 import { fade } from '@material-ui/core/styles';
 
 const headerLinkStyle = theme => ({
@@ -106,7 +106,7 @@ const headerLinkStyle = theme => ({
     width: "30px",
     height: "30px",
     borderRadius: "50%",
-    marginTop:"-5px"
+    marginTop: "-5px"
   },
   search: {
     position: 'relative',
@@ -116,7 +116,7 @@ const headerLinkStyle = theme => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    marginTop : "5px",
+    marginTop: "5px",
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),

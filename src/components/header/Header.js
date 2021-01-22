@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import logo from '../../assets/img/logo.png';
 import classNames from "classnames";
 import PropTypes from "prop-types";
@@ -16,20 +16,35 @@ import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 import SearchIcon from '@material-ui/icons/Search';
 
-import styles from '../../assets/jss/material-kit-react/headerStyle.js';
+import styles from 'assets/jss/material-kit-react/headerStyle.js';
 import HeaderLink from "./HeaderLink";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles(styles);
 
-export default function Header(props) {
+Header.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    branch: PropTypes.string,
+    color: PropTypes.string,
+    fixed: PropTypes.string,
+    changeColorOnScroll: PropTypes.func.isRequired
+}
+Header.defaultProps = {
+    branch: null,
+    color: null,
+    fixed: null,
+}
+
+export default function Header({
+    branch, color, fixed, onSubmit, changeColorOnScroll
+}) {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-
     React.useEffect(() => {
-        if (props.changeColorOnScroll) {
+        if (changeColorOnScroll) {
             window.addEventListener("scroll", headerColorChange);
         }
         return function cleanup() {
-            if (props.changeColorOnScroll) {
+            if (changeColorOnScroll) {
                 window.removeEventListener("scroll", headerColorChange);
             }
         };
@@ -38,7 +53,6 @@ export default function Header(props) {
         setMobileOpen(!mobileOpen);
     };
     const headerColorChange = () => {
-        const { color, changeColorOnScroll } = props;
         const windowsScrollTop = window.pageYOffset;
         if (windowsScrollTop > changeColorOnScroll.height) {
             document.body
@@ -57,16 +71,36 @@ export default function Header(props) {
         }
     };
 
-    const { branch, color, fixed } = props;
     const appBarClasses = classNames({
         [classes.appBar]: true,
         [classes[color]]: color,
         [classes.fixed]: fixed
     })
-    const brandComponent = <Button className={classes.title}>
+    const brandComponent = <Link to="/toys" className={classes.link}><Button className={classes.title}>
         <img src={logo} style={{ height: "30px", backgroundColor: "white", borderRadius: "50%", padding: "1px", marginRight: "4px" }} alt="logo" />
         {branch}
-    </Button>;
+    </Button></Link>;
+
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const typingTimeoutRef = useRef(null);
+
+    const handleSearchChange = (event) => {
+        const value = event.target.value;
+        setSearchTerm(event.target.value);
+        if (!onSubmit) return;
+
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        }
+        typingTimeoutRef.current = setTimeout(() => {
+            const formValues = {
+                searchTerm: value,
+            }
+            onSubmit(formValues);
+        }, 300);
+    }
+
+    console.log('header');
     return (
         <AppBar className={appBarClasses}>
             <Toolbar className={classes.container}>
@@ -82,6 +116,8 @@ export default function Header(props) {
                             input: classes.inputInput,
                         }}
                         inputProps={{ 'aria-label': 'search' }}
+                        value={searchTerm}
+                        onChange={handleSearchChange}
                     />
                 </div>
                 <Hidden smDown implementation="css">

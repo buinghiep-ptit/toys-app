@@ -1,29 +1,37 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
+import Avatar from "@material-ui/core/Avatar";
+import PropTypes from 'prop-types';
 // @mui core
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from "@material-ui/core/CardActions";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
+import { makeStyles } from "@material-ui/core/styles";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import CommentIcon from '@material-ui/icons/Comment';
+import FavoriteIcon from "@material-ui/icons/Favorite";
 // @mui icon
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import CommentIcon from '@material-ui/icons/Comment';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 // @mui lab
 import Skeleton from '@material-ui/lab/Skeleton';
+import classNames from "classnames";
+import React from "react";
+import styles from 'assets/jss/material-kit-react/components/customCardStyle';
 // 
-import CustomDialog from './CustomDialog.js';
+import CustomDialog from './dialog/CustomDialog.js';
+import { LazyImage } from "./CustomLazyLoadImage";
 
-import styles from '../../assets/jss/material-kit-react/common/customCardStyle';
 const useStyles = makeStyles(styles);
-function CustomCard(props) {
+
+CustomDialog.propTypes = {
+    model: PropTypes.object.isRequired,
+}
+CustomDialog.defaultProps = {}
+
+function CustomCard({ model }) {
     console.log("custom card!");
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -41,8 +49,6 @@ function CustomCard(props) {
         }, 2500);
         return () => clearTimeout(timer);
     }, []);
-
-    const { model } = props;
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -52,7 +58,7 @@ function CustomCard(props) {
                         : <Avatar
                             aria-label="recipe"
                             className={classes.avatar}
-                            src={model.avatar} />
+                            src={model.avatarUrl} />
                 }
                 action={
                     loading ? null
@@ -62,7 +68,7 @@ function CustomCard(props) {
                 }
                 title={
                     loading ? <Skeleton animation="wave" height={10} width="80%" style={{ marginBottom: 6 }} />
-                        : model.name
+                        : model.modelName
                 }
                 subheader={
                     loading ? <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
@@ -73,13 +79,21 @@ function CustomCard(props) {
             {loading ? <Skeleton animation="wave" variant="rect" className={classes.media} /> : (<div className={classes.mediaWrapper}>
                 <CardActionArea onClick={handleClickOpen}>
                     <CardMedia
-                        className={classes.media}
-                        image={model.urlBackground}
-                        title="Paella dish"
-                    />
+                    // className={classes.media}
+                    // image={model.backgroundUrl}
+                    // title="Paella dish"
+                    >
+                        <LazyImage
+                            className="media"
+                            aspectRatio={16 / 9}
+                            lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAADCgAwAEAAAAAQAAABcAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/CABEIABcAMAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAADAgQBBQAGBwgJCgv/xADDEAABAwMCBAMEBgQHBgQIBnMBAgADEQQSIQUxEyIQBkFRMhRhcSMHgSCRQhWhUjOxJGIwFsFy0UOSNIII4VNAJWMXNfCTc6JQRLKD8SZUNmSUdMJg0oSjGHDiJ0U3ZbNVdaSVw4Xy00Z2gONHVma0CQoZGigpKjg5OkhJSldYWVpnaGlqd3h5eoaHiImKkJaXmJmaoKWmp6ipqrC1tre4ubrAxMXGx8jJytDU1dbX2Nna4OTl5ufo6erz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAECAAMEBQYHCAkKC//EAMMRAAICAQMDAwIDBQIFAgQEhwEAAhEDEBIhBCAxQRMFMCIyURRABjMjYUIVcVI0gVAkkaFDsRYHYjVT8NElYMFE4XLxF4JjNnAmRVSSJ6LSCAkKGBkaKCkqNzg5OkZHSElKVVZXWFlaZGVmZ2hpanN0dXZ3eHl6gIOEhYaHiImKkJOUlZaXmJmaoKOkpaanqKmqsLKztLW2t7i5usDCw8TFxsfIycrQ09TV1tfY2drg4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwAEBAQEBAQEBAQEBgYFBgYIBwcHBwgMCQkJCQkMEwwODAwODBMRFBAPEBQRHhcVFRceIh0bHSIqJSUqNDI0RERc/9sAQwEEBAQEBAQEBAQEBgYFBgYIBwcHBwgMCQkJCQkMEwwODAwODBMRFBAPEBQRHhcVFRceIh0bHSIqJSUqNDI0RERc/9oADAMBAAIRAxEAAAG/vd0lcZm52NhQ+hc0o5y75OwF0SK2TPaOaev/2gAIAQEAAQUCjt2i1d+uOxissb0LtXLbuKjjIfiLoh2LIxSEOWjROUtF01z5uKblBd05Lh//2gAIAQMRAT8BeK0PnX//2gAIAQIRAT8Ba+267f/aAAgBAQAGPwJ8GFKSaq0T82ZUjgKPh9wS8QrCJI8hrko/bSjgWmvLEKopE+WaFaH5kd6HtFroleRFOLkAAGUilafHv//EADMQAQADAAICAgICAwEBAAACCwERACExQVFhcYGRobHB8NEQ4fEgMEBQYHCAkKCwwNDg/9oACAEBAAE/ITYyk1uAbgR3je7KiBxjJdd4n11SKEnK8XDdjOgGVaDiQA1MAYCQ435e3TXquaCc/wDGXIRESwMfGs0QnDD5zL7bJZ5v/9oADAMBAAIRAxEAABBycSfyT//EADMRAQEBAAMAAQIFBQEBAAEBCQEAESExEEFRYSBx8JGBobHRweHxMEBQYHCAkKCwwNDg/9oACAEDEQE/EI5NXfj8/BiPo2/Hn//aAAgBAhEBPxC1jDNeef19vDkH3//aAAgBAQABPxC0jGPxUdVZcRpMGGx4Fr5+ayGKjUyIcPmjOPxQqx+Ni8KVdq8TFPUlpKHNi8PhBiBKqtcgsXhY/GqTTgcw/U2INfw1Iy4SViT0CXqwFWrCTIA0lfbYzr+72jf/2Q=="
+                            src={model.backgroundUrl}
+                            alt="a woman covering face with frosted glass"
+                        />
+                    </CardMedia>
                 </CardActionArea>
                 <IconButton aria-label="money" className={classNames(classes.layer)}>
-                    <AttachMoneyIcon style={{ fontSize: "1rem", color: "white" }} />
+                    <AddShoppingCartIcon style={{ fontSize: "1.2rem", color: "#df1660" }} />
                 </IconButton>
                 {
 

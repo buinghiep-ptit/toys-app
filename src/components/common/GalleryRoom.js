@@ -3,7 +3,6 @@ import {
     AmbientLight,
     AnimationMixer,
     AxesHelper,
-    Box3,
     Cache,
     CubeTextureLoader,
     DirectionalLight,
@@ -35,7 +34,6 @@ import {
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { ZipLoader } from '../../../src/lib/zip-loader/ZipLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 // import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { VRButton } from '../../../src/lib/webxr/VRButton.js';
@@ -44,13 +42,10 @@ import { VRButton } from '../../../src/lib/webxr/VRButton.js';
 import { GUI } from 'dat.gui';
 
 // import { environments } from '../assets/environment/index.js';
-import { createBackground } from '../../../src/lib/three-vignette.js';
-import { MeshoptDecoder } from '../../../src/lib/gltf-pack/js/meshopt_decoder.js';
+import { createBackground } from 'lib/three-vignette.js';
+import { MeshoptDecoder } from '/lib/gltf-pack/js/meshopt_decoder.js';
 
 // @mui core
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 
 const DEFAULT_CAMERA = '[default]';
 const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -173,11 +168,11 @@ export default class ViewportXR extends Component {
         this.scene = new Scene();
 
         const fov = Preset.ASSET_GENERATOR
-            ? 0.8 * 180 / Math.PI
+            ? 1.5 * 0.8 * 180 / Math.PI
             : 60;
         this.defaultCamera = new PerspectiveCamera(fov, this.el.clientWidth / this.el.clientHeight, 0.01, 1000);
         this.defaultCamera.target = new Vector3(0, 0, 0);
-        this.defaultCamera.position.z = -35;
+        this.defaultCamera.position.z = 1;
         this.activeCamera = this.defaultCamera;
         this.scene.add(this.defaultCamera);
         if (/Android|webOS|Mac|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -235,7 +230,8 @@ export default class ViewportXR extends Component {
 
         this.loadSphere360();
         // this.loadPanorama();
-        this.loadModel();
+        this.loadModel({ posX: 70, posY: -20, posZ: 0, scale: 20, url: './models/room/arena_gallery_webvr_3d.zip' });
+        this.loadModel({ posX: 65, posY: -5, posZ: 0, scale: .01, url: './models/room/fel_iron_horde_lightning_cannon_tank_-_animated.zip' });
 
         this.addAxesHelper();
         // this.addGUI();
@@ -313,7 +309,8 @@ export default class ViewportXR extends Component {
     }
 
     stop() {
-        cancelAnimationFrame(this.frameId)
+        // cancelAnimationFrame(this.frameId);
+        this.renderer.setAnimationLoop(null);
     }
 
     // interacting
@@ -526,7 +523,7 @@ export default class ViewportXR extends Component {
         // interacting
         this.lat = Math.max(- 85, Math.min(85, this.lat));
         this.phi = MathUtils.degToRad(90 - this.lat);
-        this.theta = MathUtils.degToRad(90 + this.lon);
+        this.theta = MathUtils.degToRad(this.lon);
 
         this.activeCamera.target.x = 500 * Math.sin(this.phi) * Math.cos(this.theta);
         this.activeCamera.target.y = 500 * Math.cos(this.phi);
@@ -541,6 +538,7 @@ export default class ViewportXR extends Component {
             // this.axesCamera.lookAt(this.axesScene.position)
             this.axesRenderer.render(this.axesScene, this.axesCamera);
         }
+        console.log("CAM POS:" + this.activeCamera.position.x + "||" + this.activeCamera.position.y + "||" + this.activeCamera.position.z);
     }
 
     resize() {
@@ -582,11 +580,11 @@ export default class ViewportXR extends Component {
         ]);
         this.scene.background = texture;
     }
-    loadModel() {
+    loadModel(model) {
         const manager = new LoadingManager();
 
-        // var url = this.model.urlModel;
-        var url = './models/room/arena_gallery_webvr_3d.zip';
+        var url = model.url;
+        // var url = './models/room/arena_gallery_webvr_3d.zip';
 
         new Promise((resolve, reject) => {
 
@@ -628,7 +626,7 @@ export default class ViewportXR extends Component {
                     );
                 }
 
-                this.setContent(scene, clips);
+                this.setContent(scene, clips, model);
             });
 
         });
@@ -637,9 +635,9 @@ export default class ViewportXR extends Component {
      * @param {THREE.Object3D} object
      * @param {Array<THREE.AnimationClip} clips
      */
-    setContent(object, clips) {
+    setContent(object, clips, model) {
 
-        this.clear();
+        // this.clear();
 
         // const box = new Box3().setFromObject(object);
         // const size = box.getSize(new Vector3()).length();
@@ -681,8 +679,8 @@ export default class ViewportXR extends Component {
 
         // this.controls.saveState();
 
-        object.position.set(0, -20, 0);
-        object.scale.multiplyScalar(0.1 * 200);
+        object.position.set(model.posX, model.posY, model.posZ);
+        object.scale.multiplyScalar(model.scale);
 
         this.scene.add(object);
         this.content = object;

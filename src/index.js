@@ -1,28 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
-
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import store from 'store';
 
 import "assets/scss/material-kit-react.scss?v=1.9.0";
 
-import Login from './views/Login.js';
-import App from './views/App.js';
-var history = createBrowserHistory();
+import App from 'App';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/" exact component={App} />
-      </Switch>
-    </Router>,
+    <App />
   </Provider>,
   document.getElementById('root')
 );

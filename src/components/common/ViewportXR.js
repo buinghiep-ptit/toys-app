@@ -43,10 +43,6 @@ import { createBackground } from '../../../src/lib/three-vignette.js';
 import { MeshoptDecoder } from '../../../src/lib/gltf-pack/js/meshopt_decoder.js';
 
 // @mui core
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-
 const DEFAULT_CAMERA = '[default]';
 const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
@@ -227,7 +223,8 @@ export default class ViewportXR extends Component {
     }
 
     stop() {
-        cancelAnimationFrame(this.frameId)
+        // cancelAnimationFrame(this.frameId);
+        this.renderer.setAnimationLoop(null);
     }
     animate = () => {
         console.log("RUN!");
@@ -247,6 +244,8 @@ export default class ViewportXR extends Component {
             this.axesCamera.lookAt(this.axesScene.position)
             this.axesRenderer.render(this.axesScene, this.axesCamera);
         }
+        // console.log("CAM POS:" + this.activeCamera.position.x + "||" + this.activeCamera.position.y + "||" + this.activeCamera.position.z);
+        console.log("render!");
     }
 
     resize() {
@@ -291,7 +290,7 @@ export default class ViewportXR extends Component {
     loadModel() {
         const manager = new LoadingManager();
 
-        var url = this.model.urlModel;
+        var url = this.model.modelUrl;
         //var url = './models/glTF/BoomBox.gltf';
 
         new Promise((resolve, reject) => {

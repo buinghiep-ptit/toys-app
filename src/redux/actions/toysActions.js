@@ -1,36 +1,37 @@
 import {
-    FETCH_TOYS_REQUEST,
-    FETCH_TOYS_SUCCESS,
-    FETCH_TOYS_ERROR
+    FETCH_GAMES_REQUEST,
+    FETCH_GAMES_SUCCESS,
+    FETCH_GAMES_ERROR,
+    SEARCH_GAMES_REQUEST
 } from 'constants/actionTypes';
-import toyApi from 'api/toyApi';
+import gameApi from 'api/toyApi';
 
-export const toysFetchRequest = () => ({
-    type: FETCH_TOYS_REQUEST,
+export const gamesFetchRequest = () => ({
+    type: FETCH_GAMES_REQUEST,
     payload: {}
 });
 
-export const toysFetchSuccess = (fetchedData) => ({
-    type: FETCH_TOYS_SUCCESS,
+export const gamesFetchSuccess = (fetchedData) => ({
+    type: FETCH_GAMES_SUCCESS,
     payload: { fetchedData }
 });
-export const toysFetchError = (message) => ({
-    type: FETCH_TOYS_ERROR,
+export const gamesFetchError = (message) => ({
+    type: FETCH_GAMES_ERROR,
     payload: { message }
 });
 
-export const fetchToys = (filters) => async dispatch => {
+export const fetchGames = (params) => async dispatch => {
     try {
-        dispatch(toysFetchRequest());
-        const results = await toyApi.getAll(filters);
-        dispatch(toysFetchSuccess(results));
+        dispatch(gamesFetchRequest());
+        const data = await gameApi.getGames(params);
+        const { results } = data;
+        console.log('RESULTS: ', results);
+        dispatch(gamesFetchSuccess(results));
     } catch (err) {
-        dispatch(toysFetchError(err.message));
+        dispatch(gamesFetchSuccess([]));
+        dispatch(gamesFetchError(err));
     };
 }
-
-export const fetchToysIfNeeded = (filters) => async dispatch => {
-    if (true) {
-        dispatch(fetchToys(filters));
-    }
-};
+export const searchGamesRequest = () => ({
+    type: SEARCH_GAMES_REQUEST
+})

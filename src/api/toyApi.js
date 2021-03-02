@@ -1,15 +1,10 @@
 import axiosClient from "./axiosClient";
 
-const toyApi = {
-    getAll: (params) => {
-        const url = '/search';
+const gameApi = {
+    getGames: (params) => {
+        const url = '';
         return axiosClient.get(url, { params });
-    },
-
-    get: (id) => {
-        const url = `/posts/${id}`;
-        return axiosClient.get(url);
     },
 }
 
-export default toyApi;
+export default gameApi;

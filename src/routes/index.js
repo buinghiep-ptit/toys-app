@@ -14,7 +14,7 @@ export const routes = [
         component: HomePage
     },
     {
-        path: ['/', '/toys'],
+        path: ['/', '/games'],
         exact: true,
         layout: PublicLayout,
         component: ToysPage

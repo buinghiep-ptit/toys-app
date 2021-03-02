@@ -23,8 +23,8 @@ const customDialogStyle = {
     opacity: 1,
     background: "rgba(0,0,0,.5)",
     // overflow: "auto",
-    overflowY: "auto",
-    overflowX: "hidden",
+    // overflowY: "auto",
+    // overflowX: "hidden",
     transform: "translateZ(0)",
     transition: "opacity .2s"
   },

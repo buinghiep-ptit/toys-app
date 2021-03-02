@@ -1,31 +1,33 @@
 import {
-    FETCH_TOYS_REQUEST,
-    FETCH_TOYS_SUCCESS,
-    FETCH_TOYS_ERROR
+    FETCH_GAMES_REQUEST,
+    FETCH_GAMES_SUCCESS,
+    FETCH_GAMES_ERROR,
+    SEARCH_GAMES_REQUEST
 } from 'constants/actionTypes';
-
 const initialState = {
-    loading: false,
+    loading: true,
     success: false,
     message: null,
     data: [],
+    hasMore: false
 };
 
-const toysReducer = (state = initialState, { type, payload }) => {
+const gamesReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case FETCH_TOYS_REQUEST:
+        case FETCH_GAMES_REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case FETCH_TOYS_SUCCESS:
+        case FETCH_GAMES_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 success: true,
-                data: payload.fetchedData.data.toyDTOList,
+                data: [...state.data, ...payload.fetchedData],
+                hasMore: !!payload.fetchedData.length
             };
-        case FETCH_TOYS_ERROR:
+        case FETCH_GAMES_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -33,8 +35,16 @@ const toysReducer = (state = initialState, { type, payload }) => {
                 message: payload.message,
             };
 
+        case SEARCH_GAMES_REQUEST:
+            return {
+                ...state,
+                loading: false,
+                data: [],
+            };
+
+
         default:
             return state;
     }
 };
-export default toysReducer;
+export default gamesReducer;

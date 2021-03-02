@@ -19,6 +19,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import styles from 'assets/jss/material-kit-react/headerStyle.js';
 import HeaderLink from "./HeaderLink";
 import { Link } from "react-router-dom";
+import Search from "./Search";
 const useStyles = makeStyles(styles);
 
 Header.propTypes = {
@@ -109,7 +110,8 @@ export default function Header({
                     <div className={classes.searchIcon}>
                         <SearchIcon />
                     </div>
-                    <InputBase
+                    <Search />
+                    {/* <InputBase
                         placeholder="Tìm kiếm..."
                         classes={{
                             root: classes.inputRoot,
@@ -118,7 +120,7 @@ export default function Header({
                         inputProps={{ 'aria-label': 'search' }}
                         value={searchTerm}
                         onChange={handleSearchChange}
-                    />
+                    /> */}
                 </div>
                 <Hidden smDown implementation="css">
                     <HeaderLink />

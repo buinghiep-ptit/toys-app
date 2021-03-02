@@ -1,12 +1,8 @@
 import { createSelector } from 'reselect';
-import { getToys } from './commonSelectors';
+import { getGamesData } from 'utils/ToysUtils';
+import { getGames } from 'selectors/commonSelectors';
 
-export const selectToys = createSelector(
-    [getToys],
-    getToys => getToys.data,
-);
-
-export const selectToysCount = createSelector(
-    [selectToys],
-    selectToys => selectToys.length,
-);
+export const gamesSelector = createSelector(
+    getGames,
+    getGamesData
+)

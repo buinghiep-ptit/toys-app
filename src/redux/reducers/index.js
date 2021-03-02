@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import toysReducers from "./toysReducers";
-import usersReducers from "./usersReducers";
+import routerReducers from "./routerReducers";
 
 const rootReducer = combineReducers({
-    toys: toysReducers,
-    users: usersReducers
+    games: toysReducers,
+    router: routerReducers
 });
 export default rootReducer;

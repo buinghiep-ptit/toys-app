@@ -23,6 +23,7 @@ import styles from 'assets/jss/material-kit-react/components/customCardStyle';
 // 
 import CustomDialog from './dialog/CustomDialog.js';
 import { LazyImage } from "./CustomLazyLoadImage";
+import GameItem from "components/body/GameItem.js";
 
 const useStyles = makeStyles(styles);
 
@@ -32,7 +33,6 @@ CustomDialog.propTypes = {
 CustomDialog.defaultProps = {}
 
 function CustomCard({ model }) {
-    console.log("custom card!");
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -58,7 +58,7 @@ function CustomCard({ model }) {
                         : <Avatar
                             aria-label="recipe"
                             className={classes.avatar}
-                            src={model.avatarUrl} />
+                            src={model.backgroundImage} />
                 }
                 action={
                     loading ? null
@@ -68,11 +68,11 @@ function CustomCard({ model }) {
                 }
                 title={
                     loading ? <Skeleton animation="wave" height={10} width="80%" style={{ marginBottom: 6 }} />
-                        : model.modelName
+                        : model.name
                 }
                 subheader={
                     loading ? <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
-                        : model.dateCreation
+                        : model.released
                 }
             />
 
@@ -83,13 +83,14 @@ function CustomCard({ model }) {
                     // image={model.backgroundUrl}
                     // title="Paella dish"
                     >
-                        <LazyImage
+                        {/* <LazyImage
                             className="media"
                             aspectRatio={16 / 9}
                             lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAADCgAwAEAAAAAQAAABcAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/CABEIABcAMAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAADAgQBBQAGBwgJCgv/xADDEAABAwMCBAMEBgQHBgQIBnMBAgADEQQSIQUxEyIQBkFRMhRhcSMHgSCRQhWhUjOxJGIwFsFy0UOSNIII4VNAJWMXNfCTc6JQRLKD8SZUNmSUdMJg0oSjGHDiJ0U3ZbNVdaSVw4Xy00Z2gONHVma0CQoZGigpKjg5OkhJSldYWVpnaGlqd3h5eoaHiImKkJaXmJmaoKWmp6ipqrC1tre4ubrAxMXGx8jJytDU1dbX2Nna4OTl5ufo6erz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAECAAMEBQYHCAkKC//EAMMRAAICAQMDAwIDBQIFAgQEhwEAAhEDEBIhBCAxQRMFMCIyURRABjMjYUIVcVI0gVAkkaFDsRYHYjVT8NElYMFE4XLxF4JjNnAmRVSSJ6LSCAkKGBkaKCkqNzg5OkZHSElKVVZXWFlaZGVmZ2hpanN0dXZ3eHl6gIOEhYaHiImKkJOUlZaXmJmaoKOkpaanqKmqsLKztLW2t7i5usDCw8TFxsfIycrQ09TV1tfY2drg4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwAEBAQEBAQEBAQEBgYFBgYIBwcHBwgMCQkJCQkMEwwODAwODBMRFBAPEBQRHhcVFRceIh0bHSIqJSUqNDI0RERc/9sAQwEEBAQEBAQEBAQEBgYFBgYIBwcHBwgMCQkJCQkMEwwODAwODBMRFBAPEBQRHhcVFRceIh0bHSIqJSUqNDI0RERc/9oADAMBAAIRAxEAAAG/vd0lcZm52NhQ+hc0o5y75OwF0SK2TPaOaev/2gAIAQEAAQUCjt2i1d+uOxissb0LtXLbuKjjIfiLoh2LIxSEOWjROUtF01z5uKblBd05Lh//2gAIAQMRAT8BeK0PnX//2gAIAQIRAT8Ba+267f/aAAgBAQAGPwJ8GFKSaq0T82ZUjgKPh9wS8QrCJI8hrko/bSjgWmvLEKopE+WaFaH5kd6HtFroleRFOLkAAGUilafHv//EADMQAQADAAICAgICAwEBAAACCwERACExQVFhcYGRobHB8NEQ4fEgMEBQYHCAkKCwwNDg/9oACAEBAAE/ITYyk1uAbgR3je7KiBxjJdd4n11SKEnK8XDdjOgGVaDiQA1MAYCQ435e3TXquaCc/wDGXIRESwMfGs0QnDD5zL7bJZ5v/9oADAMBAAIRAxEAABBycSfyT//EADMRAQEBAAMAAQIFBQEBAAEBCQEAESExEEFRYSBx8JGBobHRweHxMEBQYHCAkKCwwNDg/9oACAEDEQE/EI5NXfj8/BiPo2/Hn//aAAgBAhEBPxC1jDNeef19vDkH3//aAAgBAQABPxC0jGPxUdVZcRpMGGx4Fr5+ayGKjUyIcPmjOPxQqx+Ni8KVdq8TFPUlpKHNi8PhBiBKqtcgsXhY/GqTTgcw/U2INfw1Iy4SViT0CXqwFWrCTIA0lfbYzr+72jf/2Q=="
                             src={model.backgroundUrl}
                             alt="a woman covering face with frosted glass"
-                        />
+                        /> */}
+                        <GameItem game={model} />
                     </CardMedia>
                 </CardActionArea>
                 <IconButton aria-label="money" className={classNames(classes.layer)}>

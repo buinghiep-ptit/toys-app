@@ -1,2 +1,1 @@
-// toy
-export const getToys = state => state.toys;
+export const getGames = state => state.games;

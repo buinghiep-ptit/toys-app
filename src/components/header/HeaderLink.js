@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 //@mui core
@@ -15,6 +15,7 @@ import profileImage from "assets/img/avatar.jpg";
 import CustomDropdown from 'components/common/CustomDropdown.js';
 import Button from "components/common/CustomButton.js";
 
+import LoginPage from 'pages/LoginPage';
 
 import styles from 'assets/jss/material-kit-react/headerLinkStyle.js';
 import { Link } from "react-router-dom";
@@ -22,6 +23,14 @@ const useStyles = makeStyles(styles);
 
 export default function HeaderLink(props) {
     const classes = useStyles();
+    const [openLogin, setOpenLogin] = useState(false);
+    const handleOpenLogin = (event) => {
+        event.preventDefault();
+        setOpenLogin(true);
+    }
+    const handleClose = () => {
+        setOpenLogin(false);
+    };
     return (
         <List className={classes.list}>
             <ListItem className={classes.listItem}>
@@ -29,10 +38,9 @@ export default function HeaderLink(props) {
                 <Button
                     color="transparent"
                     className={classes.navLink}
+                    onClick={handleOpenLogin}
                 >
-                    <Link to="/login" className={classes.link}>
-                        Đăng ký
-                        </Link>
+                    Đăng ký
                 </Button>
             </ListItem>
             <ListItem className={classes.listItem}>
@@ -40,12 +48,14 @@ export default function HeaderLink(props) {
                 <Button
                     color="transparent"
                     className={classes.navLink}
+                    onClick={handleOpenLogin}
                 >
-                    <Link to="/login" className={classes.link}>
-                        Đăng nhập
-                        </Link>
+                    Đăng nhập
                 </Button>
             </ListItem>
+            {
+                <LoginPage openLogin={openLogin} handleClose={handleClose} />
+            }
             <ListItem className={classes.listItem}>
                 <IconButton aria-label="show cart" color="inherit">
                     <Badge badgeContent={1} color="secondary">

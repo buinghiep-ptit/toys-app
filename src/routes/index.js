@@ -20,7 +20,7 @@ export const routes = [
         component: ToysPage
     },
     {
-        path: '/toys/:slug',
+        path: '/games/:slug',
         exact: true,
         layout: PublicLayout,
         component: ToysPage

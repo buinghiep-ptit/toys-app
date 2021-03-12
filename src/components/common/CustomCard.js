@@ -68,7 +68,7 @@ function CustomCard({ model }) {
                 }
                 title={
                     loading ? <Skeleton animation="wave" height={10} width="80%" style={{ marginBottom: 6 }} />
-                        : model.name
+                        : <div onClick={handleClickOpen} style={{ cursor: 'pointer' }} >{model.name}</div>
                 }
                 subheader={
                     loading ? <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
@@ -77,7 +77,7 @@ function CustomCard({ model }) {
             />
 
             {loading ? <Skeleton animation="wave" variant="rect" className={classes.media} /> : (<div className={classes.mediaWrapper}>
-                <CardActionArea onClick={handleClickOpen}>
+                <CardActionArea>
                     <CardMedia
                     // className={classes.media}
                     // image={model.backgroundUrl}

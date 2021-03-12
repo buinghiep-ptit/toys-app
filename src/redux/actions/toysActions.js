@@ -27,7 +27,7 @@ export const fetchGames = (params) => async dispatch => {
         const { results } = data;
         const games = [];
 
-        [...results].map(res => games.push({ ...res, modelUrl: "https://upload-test.foxpay.vn/media/file/inside/2021/01/15/12/league_of_legends_-_aatrox.zip" }))
+        [...results].map(res => res.backgroundImage && games.push({ ...res, modelUrl: "https://upload-test.foxpay.vn/media/file/inside/2021/01/15/12/league_of_legends_-_aatrox.zip" }))
 
         console.log('GAMES: ', games);
         dispatch(gamesFetchSuccess(games));

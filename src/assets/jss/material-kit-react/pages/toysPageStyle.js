@@ -18,7 +18,7 @@ const toysPageStyle = {
         margin: "10px 0 0"
     },
     main: {
-        background: "#FFFFFF",
+        background: "#151515",
         position: "relative",
         zIndex: "3"
     },

@@ -25,8 +25,12 @@ export const fetchGames = (params) => async dispatch => {
         dispatch(gamesFetchRequest());
         const data = await gameApi.getGames(params);
         const { results } = data;
-        console.log('RESULTS: ', results);
-        dispatch(gamesFetchSuccess(results));
+        const games = [];
+
+        [...results].map(res => games.push({ ...res, modelUrl: "https://upload-test.foxpay.vn/media/file/inside/2021/01/15/12/league_of_legends_-_aatrox.zip" }))
+
+        console.log('GAMES: ', games);
+        dispatch(gamesFetchSuccess(games));
     } catch (err) {
         dispatch(gamesFetchSuccess([]));
         dispatch(gamesFetchError(err));

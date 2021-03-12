@@ -62,7 +62,7 @@ function CustomCard({ model }) {
                 }
                 action={
                     loading ? null
-                        : (<IconButton aria-label="settings">
+                        : (<IconButton aria-label="settings" style={{ color: "#fff" }}>
                             <MoreVertIcon />
                         </IconButton>)
                 }
@@ -72,7 +72,7 @@ function CustomCard({ model }) {
                 }
                 subheader={
                     loading ? <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
-                        : model.released
+                        : <div style={{ color: "#fff" }}>{model.released}</div>
                 }
             />
 

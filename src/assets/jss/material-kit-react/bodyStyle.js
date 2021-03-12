@@ -18,6 +18,7 @@ const bodyStyle = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    backgroundColor: "#1e1f27"
 })
 
 export default bodyStyle;

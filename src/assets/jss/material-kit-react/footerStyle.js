@@ -26,7 +26,8 @@ const footerStyle = {
     textAlign: "center",
     display: "flex",
     zIndex: "2",
-    position: "relative"
+    position: "relative",
+    color: "#FFFFFF"
   },
   a: {
     color: primaryColor,
@@ -55,9 +56,9 @@ const footerStyle = {
     position: "relative",
     top: "3px"
   },
-  socialContainer : {
+  socialContainer: {
     textAlign: "center",
-    marginTop : "80px"
+    marginTop: "80px"
   },
   socials: {
     maxWidth: "24px",

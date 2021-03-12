@@ -18,7 +18,7 @@ export default function GroupedSelect() {
     return (
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Thể loại</InputLabel>
+                <InputLabel htmlFor="grouped-select" style={{ color: "#FFFFFF" }}>Thể loại</InputLabel>
                 <Select defaultValue="" id="grouped-select">
                     <MenuItem value={1}>Marvel</MenuItem>
                     <MenuItem value={2}>Anime</MenuItem>

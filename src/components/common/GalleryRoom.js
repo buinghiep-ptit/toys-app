@@ -43,7 +43,7 @@ import { GUI } from 'dat.gui';
 
 // import { environments } from '../assets/environment/index.js';
 import { createBackground } from 'lib/three-vignette.js';
-import { MeshoptDecoder } from '/lib/gltf-pack/js/meshopt_decoder.js';
+import { MeshoptDecoder } from '../../../src/lib/gltf-pack/js/meshopt_decoder.js';
 
 // @mui core
 
@@ -328,7 +328,7 @@ export default class ViewportXR extends Component {
 
         document.addEventListener('pointermove', this.onPointerMove.bind(this), false);
         document.addEventListener('pointerup', this.onPointerUp.bind(this), false);
-        console.log("down");
+        // console.log("down");
 
     }
 
@@ -340,7 +340,7 @@ export default class ViewportXR extends Component {
 
             this.lon = (this.onPointerDownMouseX - event.clientX) * 0.1 + this.onPointerDownLon;
             this.lat = (event.clientY - this.onPointerDownMouseY) * 0.1 + this.onPointerDownLat;
-            console.log("move");
+            // console.log("move");
         }
 
     }
@@ -354,7 +354,7 @@ export default class ViewportXR extends Component {
         document.removeEventListener('pointermove', this.onPointerMove.bind(this));
         document.removeEventListener('pointerup', this.onPointerUp.bind(this));
 
-        console.log("up");
+        // console.log("up");
     }
 
     onDocumentMouseWheel(event) {
@@ -364,7 +364,7 @@ export default class ViewportXR extends Component {
         this.activeCamera.fov = MathUtils.clamp(fov, 10, 75);
 
         this.activeCamera.updateProjectionMatrix();
-        console.log("wheel");
+        // console.log("wheel");
 
     }
 
@@ -538,7 +538,7 @@ export default class ViewportXR extends Component {
             // this.axesCamera.lookAt(this.axesScene.position)
             this.axesRenderer.render(this.axesScene, this.axesCamera);
         }
-        console.log("CAM POS:" + this.activeCamera.position.x + "||" + this.activeCamera.position.y + "||" + this.activeCamera.position.z);
+        // console.log("CAM POS:" + this.activeCamera.position.x + "||" + this.activeCamera.position.y + "||" + this.activeCamera.position.z);
     }
 
     resize() {

@@ -20,6 +20,7 @@ const Video = ({ src }) => {
     const handleLoadedData = () => {
         setLoading(false);
         videoRef.current.play();
+        videoRef.current.volume = 1;
     };
 
     return (

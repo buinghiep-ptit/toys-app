@@ -17,10 +17,21 @@ import { selectToys } from "selectors/toysSelectors";
 import { history } from 'utils/helpers/history';
 import ToysContainer from "containers/ToysContainer";
 
+import GalleryRoom from 'components/common/GalleryRoom.js';
+import CustomDialogClone from "components/common/dialog/CustomDialogClone";
+
 const useStyles = makeStyles(styles);
 
 function ToysPage(props) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <div>
             <Header
@@ -36,11 +47,16 @@ function ToysPage(props) {
             <Parallax image={img} />
 
             <div className={classNames(classes.main, classes.mainRaised)}>
-                {/* {
-                    !loading && <Toys toys={toys} />
-                } */}
                 <ToysContainer />
             </div>
+
+            {
+
+                open && <CustomDialogClone
+                    isOpen={open}
+                    model={{}}
+                    handleClose={handleClose} />
+            }
         </div>
     );
 }
